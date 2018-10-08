@@ -1,6 +1,44 @@
 const Discord = require('discord.js')
 const bot = new Discord.Client()
+const low  = require("lowdb")
+const FileSync = require('lowdb/adapters/FileSync')
+const client = new Discord.Client()
 var prefix = ("/")
+
+const adapter = new FileSync('database.json');
+const db = low(adapter);
+
+db.defaults({ histoires: [], xp: []}).write()
+
+bot.on('mzssage', message => {
+
+    var msgauthor = message.author.id;
+
+    if(message.author.bot)return;
+
+    if(!db.get("xp").find({user: msgauthor}).value()){
+        db.get("xp").push({user: msgauthor, xp: 1}).write();
+    }else{
+        var userxpdb = db.get("xp").filter({user: msgauthor}).find('xp').value();
+        console.log(userxpdb);
+        var userxp = Object.values(userxpdb)
+        console.log(userxp)
+        console.log(`Nombre d'xp: ${userxp[1]}`)
+
+        db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1}).write();
+
+        if (message.content === prefix + "xp"){
+            var xp = db.get("xp").filter({user: msgauthor}).find('xp').value()
+            var xpfinal = Object.values(xp);
+            var xp_embed = new Discord.RichEmbed()
+                .setTitle(`Statistics d'xp de ${message.author.username}`)
+                .setColor('#F4D03F')
+                .setDescription("affichage des XP")
+                .addField("XP: ", `${xpfinal[1]} xp`)
+                .setFooter("Salut :p")
+            message.channel.send({embed: xp_embed});
+        }}})
+
 
 bot.on('message', message =>{
     let command = message.content.split (" ")[0];
@@ -9,7 +47,8 @@ bot.on('message', message =>{
 
     if (command === "kick") {
         let modRole = message.guild.roles.find("name", "PermKick");
-        if(!message.member.roles.has(modRole.id)) {
+        if(!modRole) return message.reply("Il n'y as pas de grade **PermKick** sur le serveur, veuillez un créer un s'il vous plaît")
+        if(!message.member.roles.has(modRole.if)) {
             return message.reply("tu n'as pas la permission de kick.").catch(console.error);
         }
         if(message.mentions.users.size === 0) {
@@ -29,6 +68,7 @@ bot.on('message', message =>{
     }
     if (command === "ban") {
         let modRole = message.guild.roles.find("name", "PermBan");
+        if(!modRole) return message.reply("Il n'y as pas de grade **PermBan** sur le serveur, veuillez un créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.id)) {
             return message.reply("Tu n'as pas la permissions de bannir.").catch(console.error);
         }
@@ -56,11 +96,22 @@ bot.on('guildMemberadd', function (member){
 })
 
 bot.on('message', function (message) {
-  if (message.content === 'bonjour') {
-     message.channel.send('salut')
+  if (message.content === 'Bonjour') {
+     message.channel.send(`Salut ${message.author.username}`)
   }
  })
 
+bot.on('message', function (message) {
+    if (message.content === 'bonjour') {
+        message.channel.send(`Salut ${message.author.username}`)
+    }
+})
+
+bot.on('message', function (message) {
+    if (message.content === prefix + 'help') {
+        message.channel.send(`soon **mercredi 10 octobre**`)
+    }
+})
 
 
 bot.login(process.env.TOKEN)
