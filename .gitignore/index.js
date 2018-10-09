@@ -83,7 +83,7 @@ bot.on('message', message =>{
 
 bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
-    bot.user.setGame('use /join').catch(console.error)
+    bot.user.setGame('use /help').catch(console.error)
         .then(() => console.log('setGame mis en place'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
@@ -122,7 +122,7 @@ PS:La commande help n'est pas terminer.`)
 
 bot.on('message', function (message) {
     if (message.content === prefix + 'join') {
-        message.PrivateDM.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
+        message.privateDM.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
     }
 })
 
