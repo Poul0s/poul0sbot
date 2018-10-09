@@ -83,7 +83,7 @@ bot.on('message', message =>{
 
 bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
-    bot.user.setGame('vec Poul0s#8358').catch(console.error)
+    bot.user.setStatus('vec Poul0s#8358').catch(console.error)
         .then(() => console.log('setGame mis en place'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
