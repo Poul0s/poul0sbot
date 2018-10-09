@@ -122,7 +122,7 @@ PS:La commande help n'est pas terminer.`)
 
 bot.on('message', function (message) {
     if (message.content === prefix + 'join') {
-        message.DMchannel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
+        message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
     }
 })
 
