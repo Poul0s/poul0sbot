@@ -89,7 +89,7 @@ bot.on('ready', function () {
         .then(() => console.log('setusername mis en place'))
 })
 
-bot.on('guildMemberadd', function (member){
+bot.on('guildMemberAdd', function (member){
     member.createDM().then(function (channel){
    return channel.send('Bienvenue sur le serveur')
         }).catch(consol.error)
@@ -109,7 +109,14 @@ bot.on('message', function (message) {
 
 bot.on('message', function (message) {
     if (message.content === prefix + 'help') {
-        message.channel.send(`soon **mercredi 10 octobre**`)
+        message.channel.send(`Les commande sont:
+-**/help**
+-**/ban**
+-**/kick**
+-**Bonjour**
+-(soon)**/invite
+-(soon)**/join**
+PS:La commande help n'est pas terminer.`)
     }
 })
 
