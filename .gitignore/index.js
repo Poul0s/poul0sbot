@@ -89,17 +89,17 @@ bot.on('ready', function () {
         .then(() => console.log('setusername mis en place'))
 })
 
-bot.on('guildMemberAdd', function (member){
-    member.createDM().then(function (channel){
-   return channel.send('Bienvenue sur le serveur')
-        }).catch(console.error)
+bot.on('guildMemberAdd', function (member) {
+    member.createDM().then(function (channel) {
+        return channel.send("Bienvenue sur le serveur, n'hesite pas à utilisé la commande /help pour savoir les commande que je fais.")
+    }).catch(console.error)
 })
 
 bot.on('message', function (message) {
-  if (message.content === 'Bonjour') {
-     message.channel.send(`Salut ${message.author.username}`)
-  }
- })
+    if (message.content === 'Bonjour') {
+        message.channel.send(`Salut ${message.author.username}`)
+    }
+})
 
 bot.on('message', function (message) {
     if (message.content === 'bonjour') {
@@ -114,17 +114,24 @@ bot.on('message', function (message) {
 -**/ban**
 -**/kick**
 -**Bonjour**
--(soon)**/invite
+-(soon)**/invite**
 -**/join**
 PS:La commande help n'est pas terminer.`)
     }
 })
 
+// bot.on('message', function (message) {
+ //   if (message.content === prefix + 'join') {
+//        message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
+//    }
+//})
+
 bot.on('message', function (message) {
-    if (message.content === prefix + 'join') {
-message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
-    }
+    member.createDM().then(function (channel){
+        return channel.send("Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z")
+    })
 })
+
 
 
 bot.login(process.env.TOKEN)
