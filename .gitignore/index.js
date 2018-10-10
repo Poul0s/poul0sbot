@@ -107,22 +107,45 @@ bot.on('message', function (message) {
     }
 })
 
-bot.on('message', function (message) {
-    if (message.content === prefix + 'help') {
-        message.channel.send(`Les commande sont:
--**/help**
--**/ban**
--**/kick**
--**Bonjour**
--(soon)**/invite**
--**/join**
--**/serverlist**
--**/ping**(bugger un peut xD)
--(désactivé raison : bug)**/clear**
--**/8ball**(la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)
-PS:La commande help n'est pas terminer.`)
-    }
+//ancienne commande help en cas de problème
+//bot.on('message', function (message) {
+//    if (message.content === prefix + 'help') {
+//        message.channel.send(`Les commande sont:
+//-**/help**
+//-**/ban**
+//-**/kick**
+//-**Bonjour**
+//-(soon)**/invite**
+//-**/join**
+//-**/serverlist**
+//-**/ping**(bugger un peut xD)
+//-(désactivé raison : bug)**/clear**
+//-**/8ball**(la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)
+//-**/info**
+//PS:La commande help n'est pas terminer.`)
+//    }
+//})
+//fin de l'ancienne commande help
+
+bot.on('message', message => {
+    if(message.content === prefix + "help")
+        var embed = new Discord.RichEmbed()
+            .setDescription("Liste des commande")
+            .addField("/help", "Permet de voir la liste des commande.")
+            .addField("/ban", "Permet de bannir un utilisateur.")
+            .addField("/kick", "Permet de kick un membre du serveur.")
+            .addField("(soon) /invite", "Permet de m'ajouter sur ton serveur discord, mais la je suis en beta donc je ne suis pas public.")
+            .addField("/join", "Permet de rejoindre mon serveur discord.")
+            .addField("/serverlist", "permet de voir la liste des serveur ou je suis.")
+            .addField("(bug) /ping", "Permet de voir la latence entre moi et le serveur.")
+            .addField("(desactivé) /clear", "permet de clear tout les message d'un salon.")
+            .addField("/8ball (la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)", "On pose une question et le bot repond aléatoirement.")
+            .addField("/info", "Permet de voir les info du serveur.")
+            .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
+            .setColor("#FE0000")
+    message.channel.sendEmbed(embed)
 })
+
 
  bot.on('message', function (message) {
     if (message.content === prefix + 'join') {
@@ -181,5 +204,16 @@ bot.on('message', function (message) {
             .addField("Réponse", reponse)
             message.channel.sendEmbed(bembed)
         }})
+
+bot.on('message', message => {
+    if(message.content === prefix + "info")
+    var embed = new Discord.RichEmbed()
+        .setDescription("information du discord")
+        .addField("Nom du discord", message.guild.name)
+        .addField("Le discord a été créée le", message.guild.createdAt)
+        .addField("Tu as rejoins le discord le", message.guild.joinedAt)
+        .addField("Membres total sur le discord", message.guild.memberCount)
+    message.channel.sendEmbed(embed)
+})
 
 bot.login(process.env.TOKEN)
