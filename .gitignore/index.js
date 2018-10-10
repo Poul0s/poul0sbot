@@ -92,7 +92,7 @@ bot.on('ready', function () {
 bot.on('guildMemberAdd', function (member){
     member.createDM().then(function (channel){
    return channel.send('Bienvenue sur le serveur')
-        }).catch(consol.error)
+        }).catch(console.error)
 })
 
 bot.on('message', function (message) {
