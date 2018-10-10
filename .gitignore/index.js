@@ -120,17 +120,12 @@ PS:La commande help n'est pas terminer.`)
     }
 })
 
-// bot.on('message', function (message) {
- //   if (message.content === prefix + 'join') {
-//        message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
-//    }
-//})
-
-bot.on('message', function (message) {
-    member.createDM().then(function (channel){
-        return channel.send("Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z")
-    })
+ bot.on('message', function (message) {
+    if (message.content === prefix + 'join') {
+        message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
+    }
 })
+
 
 
 
