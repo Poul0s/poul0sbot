@@ -116,6 +116,10 @@ bot.on('message', function (message) {
 -**Bonjour**
 -(soon)**/invite**
 -**/join**
+-**/serverlist**
+-**/ping**(bugger un peut xD)
+-(désactivé raison : bug)**/clear**
+-**/8ball**(la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)
 PS:La commande help n'est pas terminer.`)
     }
 })
@@ -126,7 +130,56 @@ PS:La commande help n'est pas terminer.`)
     }
 })
 
+bot.on('message', function (message) {
+    if (message.content === prefix + 'invite') {
+        message.channel.send(`Mon bot n'est pas encore prêt à etre rendu public, sorry ${message.author.username}.`)
+    }
+})
 
+bot.on('message', function (message) {
+    if (message.content === prefix + 'ping'){
+        message.channel.sendMessage('Le temps de latence sur le serveur = `' + `${message.createdTimestamp - Date.now()}` + ' ms`')
+    }
+})
 
+bot.on('message', function (message) {
+    if (message.content === prefix + 'serverlist'){
+        message.channel.send(bot.guilds.map(r => r.name + ` | **${r.memberCount}** membres`))
+    }
+})
+
+//beta bot.on('message', function (message) {
+//beta    if (message.content === prefix + 'clear') {
+//beta         if (message.member.hasPermission("MANAGE_MESSAGES")){
+//beta            message.channel.fetchMessage()
+//beta                .then(function(list){
+//beta                    message.channel.bulkDelete(list);
+//beta                }, function(err){message.channel.send("Une erreur as été trouvé, merci de contacter @Poul0s#8358 avec le code 206")})
+//beta         }
+//beta    }
+//beta })
+
+bot.on('message', function (message) {
+    if (message.content === prefix + "8ball"){
+     let args = message.content.split(" ").slice(1);
+     let tte = args.join(" ")
+        if (!tte){
+            return message.reply("Tu n'as pas poser de question")};
+
+            var replys = [
+                "Oui",
+                "non",
+                "Je sait pas, laisse moi réflechir",
+                "Ptetre ya moyen",
+                "T'es un malade bernard, **UN MALADE**"
+            ];
+
+            let reponse = (replys[Math.floor(Math.random() * replys.length)])
+        var bembed = new Discord.RichEmbed()
+            .setDescription(":8ball: 8ball")
+            .addField("Question", tte)
+            .addField("Réponse", reponse)
+            message.channel.sendEmbed(bembed)
+        }})
 
 bot.login(process.env.TOKEN)
