@@ -141,9 +141,12 @@ bot.on('message', message => {
             .addField("(desactivé) /clear", "permet de clear tout les message d'un salon.")
             .addField("/8ball (la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)", "On pose une question et le bot repond aléatoirement.")
             .addField("/info", "Permet de voir les info du serveur.")
-            .addField("(bêta)/nejichat **VotreMessage** (la oussi, si quelqu'un pourait m'aider à régler mon problème, merci de me contacter sur Poul0s8358.", "Le /nejichat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
+            .addField("(bêta)/NejiChat **VotreMessage** (la oussi, si quelqu'un pourait m'aider à régler mon problème, merci de me contacter sur Poul0s8358.", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
+            .addField("/createur", "Permet de savoir qui m'a crée")
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
+            .setFooter("NejiBot")
+            .setTimestamp()
     message.channel.sendEmbed(embed)
 })
 
@@ -200,7 +203,7 @@ bot.on('message', function (message) {
                 "Je sait pas, laisse moi réflechir",
                 "Ptetre ya moyen",
                 "T'es un malade bernard, **UN MALADE**"
-            ];
+            ].catch(console.error)
 
             let reponse = (replys[Math.floor(Math.random() * replys.length)])
         var bembed = new Discord.RichEmbed()
@@ -222,14 +225,14 @@ bot.on('message', message => {
 })
 
 bot.on('message', function (message) {
-    if(message.content === prefix + "NejiChat"){
+    if (message.content === prefix + "NejiChat"){
         let xoargs = message.content.split(" ").slice(1);
         let xo03 = xoargs.join(" ")
-        var xo02 = message.guild.channels.find('name', 'Neji-chat');
-        if(!xo02) return message.reply("Il n'y as pas de salon textuel se nommant **#Neji-chat** pour la commande /NejiChat")
-        if(message.channel.name !== 'Neji-Chat') return message.channel.send("La commande doit être effectué dans le salon #Neji-chat")
+        var xo02 = message.guild.channels.find('name', 'neji-chat');
+        if(!xo02) return message.reply("Il n'y as pas de salon textuel se nommant **#neji-chat** pour la commande /NejiChat")
+        if(message.channel.name === 'neji-Chat') return message.channel.send("La commande doit être effectué dans le salon #neji-chat")
         if(!xo03) return message.reply("Tu n'as pas ecrit de message à envoyé à tout les discords.")
-        var embedglobal = new Discord.RichEmbed()
+        var embedglobal = new Discord.RichEmbed().catch(console.error)
             .setColor("#FE0000")
             .setTitle("Message Global")
             .addField("Pseudo", message.author.username + '#' + message.author.discriminator, true)
@@ -240,5 +243,49 @@ bot.on('message', function (message) {
         bot.channels.findAll('name', 'Neji-chat').map(channel => channel.send(embedglobal))
     }
 })
+
+bot.on('message', function (message) {
+    if (message.content === prefix + "nejichat"){
+        let xoargs = message.content.split(" ").slice(1);
+        let xo03 = xoargs.join(" ")
+        var xo02 = message.guild.channels.find('name', 'neji-chat');
+        if(!xo02) return message.reply("Il n'y as pas de salon textuel se nommant **#neji-chat** pour la commande /NejiChat")
+        if(message.channel.name === 'neji-Chat') return message.channel.send("La commande doit être effectué dans le salon #neji-chat")
+        if(!xo03) return message.reply("Tu n'as pas ecrit de message à envoyé à tout les discords.")
+        var embedglobal = new Discord.RichEmbed().catch(console.error)
+            .setColor("#FE0000")
+            .setTitle("Message Global")
+            .addField("Pseudo", message.author.username + '#' + message.author.discriminator, true)
+            .addField("Discord", message.guild.name, true)
+            .addField("Message", xo03)
+            .setFooter("NejiBot")
+            .setTimestamp()
+        bot.channels.findAll('name', 'Neji-chat').map(channel => channel.send(embedglobal))
+    }
+})
+
+bot.on('message', function (message) {
+    if (message.content === prefix + "Nejichat"){
+        let xoargs = message.content.split(" ").slice(1);
+        let xo03 = xoargs.join(" ")
+        var xo02 = message.guild.channels.find('name', 'neji-chat');
+        if(!xo02) return message.reply("Il n'y as pas de salon textuel se nommant **#neji-chat** pour la commande /NejiChat")
+        if(message.channel.name === 'neji-Chat') return message.channel.send("La commande doit être effectué dans le salon #neji-chat")
+        if(!xo03) return message.reply("Tu n'as pas ecrit de message à envoyé à tout les discords.")
+        var embedglobal = new Discord.RichEmbed().catch(console.error)
+            .setColor("#FE0000")
+            .setTitle("Message Global")
+            .addField("Pseudo", message.author.username + '#' + message.author.discriminator, true)
+            .addField("Discord", message.guild.name, true)
+            .addField("Message", xo03)
+            .setFooter("NejiBot")
+            .setTimestamp()
+        bot.channels.findAll('name', 'Neji-chat').map(channel => channel.send(embedglobal))
+    }
+})
+
+bot.on('message', function (message) {
+    if (message.content === prefix + "createur")
+        message.channel.send("Mon créateur est Poul0s#8358")
 
 bot.login(process.env.TOKEN)
