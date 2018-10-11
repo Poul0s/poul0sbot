@@ -287,5 +287,6 @@ bot.on('message', function (message) {
 bot.on('message', function (message) {
     if (message.content === prefix + "createur")
         message.channel.send("Mon créateur est Poul0s#8358")
+})
 
 bot.login(process.env.TOKEN)
