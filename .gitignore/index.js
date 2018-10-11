@@ -159,7 +159,7 @@ bot.on('message', message => {
 
 bot.on('message', function (message) {
     if (message.content === prefix + 'invite') {
-        message.channel.send(`Mon bot n'est pas encore prêt à etre rendu public, sorry ${message.author.username}.`)
+        message.channel.send(`Pour pouvoir m'invité sur ton serveur discord, va sur ce lien http://bit.ly/NejiBot ${message.author.username}.`)
     }
 })
 
