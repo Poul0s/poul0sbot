@@ -235,6 +235,7 @@ bot.on('message', function (message) {
         var embedglobal = new Discord.RichEmbed()
             .setColor("#FE0000")
             .setTitle("Message Global")
+            .setDescription("Le message global est un message qui à été envoyé depuis un autre serveur, pour parler toi aussi au autre serveur, il faut utilisé la commande /NejiChat 'message'")
             .addField("Pseudo", message.author.tag, true)
             .addField("Discord", message.guild.name, true)
             .addField("Message", xo03)
