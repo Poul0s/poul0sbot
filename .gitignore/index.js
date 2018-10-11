@@ -141,7 +141,7 @@ bot.on('message', message => {
             .addField("(desactivé) /clear", "permet de clear tout les message d'un salon.")
             .addField("/8ball (la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)", "On pose une question et le bot repond aléatoirement.")
             .addField("/info", "Permet de voir les info du serveur.")
-            .addField("(bêta)/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
+            .addField("/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
             .addField("/createur", "Permet de savoir qui m'a crée")
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
