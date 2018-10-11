@@ -134,7 +134,7 @@ bot.on('message', message => {
             .addField("/help", "Permet de voir la liste des commande.")
             .addField("/ban", "Permet de bannir un utilisateur.")
             .addField("/kick", "Permet de kick un membre du serveur.")
-            .addField("(soon) /invite", "Permet de m'ajouter sur ton serveur discord, mais la je suis en beta donc je ne suis pas public.")
+            .addField("/invite", "Permet de m'ajouter sur ton serveur discord.")
             .addField("/join", "Permet de rejoindre mon serveur discord.")
             .addField("/serverlist", "permet de voir la liste des serveur ou je suis.")
             .addField("(bug) /ping", "Permet de voir la latence entre moi et le serveur.")
