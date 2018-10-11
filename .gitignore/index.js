@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+onst Discord = require('discord.js')
 const bot = new Discord.Client()
 const low  = require("lowdb")
 const FileSync = require('lowdb/adapters/FileSync')
@@ -235,12 +235,12 @@ bot.on('message', function (message) {
         var embedglobal = new Discord.RichEmbed().catch(console.error)
             .setColor("#FE0000")
             .setTitle("Message Global")
-            .addField("Pseudo", message.author.username + '#' + message.author.discriminator, true)
+            .addField("Pseudo", message.author.tag, true)
             .addField("Discord", message.guild.name, true)
             .addField("Message", xo03)
             .setFooter("NejiBot")
             .setTimestamp()
-        bot.channels.findAll('name', 'Neji-chat').map(channel => channel.send(embedglobal))
+        bot.channels.findAll('name', 'neji-chat').map(channel => channel.send(embedglobal))
     }
 })
 
@@ -255,12 +255,12 @@ bot.on('message', function (message) {
         var embedglobal = new Discord.RichEmbed().catch(console.error)
             .setColor("#FE0000")
             .setTitle("Message Global")
-            .addField("Pseudo", message.author.username + '#' + message.author.discriminator, true)
+            .addField("Pseudo", message.author.tag, true)
             .addField("Discord", message.guild.name, true)
             .addField("Message", xo03)
             .setFooter("NejiBot")
             .setTimestamp()
-        bot.channels.findAll('name', 'Neji-chat').map(channel => channel.send(embedglobal))
+        bot.channels.findAll('name', 'neji-chat').map(channel => channel.send(embedglobal))
     }
 })
 
@@ -275,12 +275,12 @@ bot.on('message', function (message) {
         var embedglobal = new Discord.RichEmbed().catch(console.error)
             .setColor("#FE0000")
             .setTitle("Message Global")
-            .addField("Pseudo", message.author.username + '#' + message.author.discriminator, true)
+            .addField("Pseudo", message.author.tag, true)
             .addField("Discord", message.guild.name, true)
             .addField("Message", xo03)
             .setFooter("NejiBot")
             .setTimestamp()
-        bot.channels.findAll('name', 'Neji-chat').map(channel => channel.send(embedglobal))
+        bot.channels.findAll('name', 'neji-chat').map(channel => channel.send(embedglobal))
     }
 })
 
