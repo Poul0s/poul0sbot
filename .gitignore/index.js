@@ -191,7 +191,7 @@ bot.on('message', function (message) {
 
 
 bot.on('message', function (message) {
-    if (message.content === prefix + "8ball"){
+    if (message.content.startsWith(prefix + "8ball")){
      let args = message.content.split(" ").slice(1);
      let tte = args.join(" ")
         if (!tte){
@@ -203,7 +203,7 @@ bot.on('message', function (message) {
                 "Je sait pas, laisse moi réflechir",
                 "Ptetre ya moyen",
                 "T'es un malade bernard, **UN MALADE**"
-            ].catch(console.error)
+            ]
 
             let reponse = (replys[Math.floor(Math.random() * replys.length)])
         var bembed = new Discord.RichEmbed()
