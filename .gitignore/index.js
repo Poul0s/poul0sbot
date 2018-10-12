@@ -79,6 +79,22 @@ bot.on('message', message =>{
         }).catch(console.error)
     }})
 
+    bot.on('message', message => {
+        if(message.content.startsWith(prefix + 'clear')) {
+            let modRole = message.guild.roles.find("name", "PermMute");
+            if(!modRole) return message.reply("Il n'y as pas de grade **PermMute** sur le serveur, veuillez un créer un s'il vous plaît")
+        if(!message.member.roles.has(modRole.id)) {
+            return message.reply("Tu n'as pas la permissions de clear.")
+        }
+            var args2 = message.content.split(" ").slice(1);
+            var messagecount = parseInt(args2.join(" "))
+            message.channel.fetchMessages({
+                limit: messagecount
+            }).then(messages => message.channel.bulkDelete(messagecount));
+            message.delete()
+    }
+    })
+
 
 
 bot.on('ready', function () {
@@ -143,6 +159,7 @@ bot.on('message', message => {
             .addField("/info", "Permet de voir les info du serveur.")
             .addField("/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
             .addField("/createur", "Permet de savoir qui m'a crée")
+            .addField("/clear", "Permet d'effacer de 2 à 100 message.")
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
             .setFooter("NejiBot")
@@ -175,18 +192,6 @@ bot.on('message', function (message) {
     }
 })
 
-
-
-//beta bot.on('message', function (message) {
-//beta    if (message.content === prefix + 'clear') {
-//beta         if (message.member.hasPermission("MANAGE_MESSAGES")){
-//beta            message.channel.fetchMessage()
-//beta                .then(function(list){
-//beta                    message.channel.bulkDelete(list);
-//beta                }, function(err){message.channel.send("Une erreur as été trouvé, merci de contacter @Poul0s#8358 avec le code 206")})
-//beta         }
-//beta    }
-//beta })
 
 
 
@@ -248,7 +253,7 @@ bot.on('message', function (message) {
 
 bot.on('message', function (message) {
     if (message.content === prefix + "createur")
-        message.channel.send("Mon créateur est Poul0s#8358")
+        message.channel.send("Mon créateur est Poul0s#8358, les personnes qui ont aider le développeur pour me développé sont: Moitié prix#4263 et LePtitMetalleux#7215, dédicasse aussi à Pyrius#9402 et KeNoDa#4258")
 })
 
 bot.login(process.env.TOKEN)
