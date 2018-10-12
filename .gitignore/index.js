@@ -139,7 +139,7 @@ bot.on('message', message => {
             .addField("/serverlist", "permet de voir la liste des serveur ou je suis.")
             .addField("(bug) /ping", "Permet de voir la latence entre moi et le serveur.")
             .addField("(desactivé) /clear", "permet de clear tout les message d'un salon.")
-            .addField("/8ball (la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)", "On pose une question et le bot repond aléatoirement.")
+            .addField("/8ball", "On pose une question et le bot répond aléatoirement.")
             .addField("/info", "Permet de voir les info du serveur.")
             .addField("/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
             .addField("/createur", "Permet de savoir qui m'a crée")
