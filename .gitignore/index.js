@@ -105,7 +105,7 @@ bot.on('message', message =>{
 //début option bot
 bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
-    bot.user.setGame('use /help').catch(console.error)
+    bot.user.setActivity('use /help').catch(console.error)
         .then(() => console.log('setGame mis en place'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
@@ -172,6 +172,7 @@ bot.on('message', message => {
             .addField("/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
             .addField("/créateur", "Permet de savoir qui m'a crée")
             .addField("/clear", "Permet d'effacer de 2 à 100 message.")
+            .addField("/chifoumi", "Permet de faire un pierre feuille ciseaux avec le bot")
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
             .setFooter("NejiBot")
@@ -227,12 +228,16 @@ bot.on('message', function (message) {
                 "non",
                 "Je sait pas, laisse moi réflechir",
                 "Ptetre ya moyen",
-                "T'es un malade bernard, **UN MALADE**"
+                "T'es un malade bernard, **UN MALADE**",
+                "demande à ta mère",
+                "demande à ton père",
+                "enchallah comme on dirait en bretagne (désolé la bretagne)",
+                "ok mais tu me doit 50€"
             ]
 
             let reponse = (replys[Math.floor(Math.random() * replys.length)])
         var bembed = new Discord.RichEmbed()
-            .setDescription(":8ball: 8ball")
+            .setDescription(":8ball: 8ball :8ball:")
             .addField("Question", tte)
             .addField("Réponse", reponse)
             message.channel.sendEmbed(bembed)
@@ -303,5 +308,38 @@ bot.on('message', message => {
     message.channel.send("TRAAAKAAAFOOIIINNNNS")
 })
 //fin trakafoins
+
+//début token
+bot.on('message', message => {
+    if(message.content === prefix + "trakafoins")
+    message.channel.send(`${message.author.username} mon token est T UN MALADE JAMAIS JLE DIRAIT`)
+})
+//fin token 
+
+//début chifoumi
+bot.on('message', function (message) {
+    if (message.content.startsWith(prefix + "chifoumi")){
+     let argspierre = message.content.split(" ").slice(1);
+     let ttepierre = argspierre.join(" ")
+        if (!ttepierre){
+            return message.reply("Tu n'as pas choisix ton action")};
+
+            var replys = [
+                "feuille",
+                "pierre",
+                "ciseaux"
+            ]
+
+            let reponse = (replys[Math.floor(Math.random() * replys.length)])
+        var embedpierre = new Discord.RichEmbed()
+            .setTitle("chifoumi")
+            .addField(`${message.author.username} :`, ttepierre)
+            .addField(`NejiBot :`, reponse)
+            .setFooter("NejiBot")
+            .setTimestamp()
+            .setColor("FE0000")
+            message.channel.sendEmbed(embedpierre)
+        }})
+        //fin chifoumi
 
 bot.login(process.env.TOKEN)
