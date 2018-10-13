@@ -154,11 +154,10 @@ bot.on('message', message => {
             .addField("/join", "Permet de rejoindre mon serveur discord.")
             .addField("/serverlist", "permet de voir la liste des serveur ou je suis.")
             .addField("(bug) /ping", "Permet de voir la latence entre moi et le serveur.")
-            .addField("(desactivé) /clear", "permet de clear tout les message d'un salon.")
             .addField("/8ball", "On pose une question et le bot répond aléatoirement.")
             .addField("/info", "Permet de voir les info du serveur.")
             .addField("/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
-            .addField("/createur", "Permet de savoir qui m'a crée")
+            .addField("/créateur", "Permet de savoir qui m'a crée")
             .addField("/clear", "Permet d'effacer de 2 à 100 message.")
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
@@ -251,9 +250,23 @@ bot.on('message', function (message) {
 })
 
 
-bot.on('message', function (message) {
-    if (message.content === prefix + "createur")
-        message.channel.send("Mon créateur est Poul0s#8358, les personnes qui ont aider le développeur pour me développé sont: Moitié prix#4263 et LePtitMetalleux#7215, dédicasse aussi à Pyrius#9402 et KeNoDa#4258")
+//bot.on('message', function (message) {
+//    if (message.content === prefix + "createur")
+//        message.channel.send("Mon créateur est Poul0s#8358, les personnes qui ont aider le développeur pour me développé sont: Moitié prix#4263 et LePtitMetalleux#7215, dédicasse aussi à Pyrius#9402 et KeNoDa#4258")
+//})
+
+bot.on('message', message => {
+    if(message.content === prefix + "créateur")
+        var embedcréateur = new Discord.RichEmbed()
+        .setTitle("Mon créateur + dédicasse")
+        .setDescription("Sur ce message, vous allez voir qui m'a crée, qui m'a aidé pour le développement et des dédicasse.")
+        .addField("Créateur", "Poul0s#8358")
+        .addField("Ceux qui ont aidé mon créateur", "Moitié prix#4263 et LPtitMetalleux#7215")
+        .addField("dédicasse", "Pyrius#9402 et KeNoDa#4258")
+        .setColor("#FE0000")
+        .setFooter("NejiBot")
+        .setTimestamp()
+    message.channel.sendEmbed(embedcréateur)
 })
 
 bot.login(process.env.TOKEN)
