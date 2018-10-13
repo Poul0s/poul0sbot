@@ -10,7 +10,7 @@ const db = low(adapter);
 
 db.defaults({ histoires: [], xp: []}).write()
 
-bot.on('mzssage', message => {
+bot.on('message', message => {
 
     var msgauthor = message.author.id;
 
