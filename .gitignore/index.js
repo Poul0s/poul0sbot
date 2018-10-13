@@ -311,7 +311,7 @@ bot.on('message', message => {
 
 //début token
 bot.on('message', message => {
-    if(message.content === prefix + "trakafoins")
+    if(message.content === prefix + "token")
     message.channel.send(`${message.author.username} mon token est T UN MALADE JAMAIS JLE DIRAIT`)
 })
 //fin token 
