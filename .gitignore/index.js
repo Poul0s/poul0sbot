@@ -3,6 +3,7 @@ const bot = new Discord.Client()
 const low  = require("lowdb")
 const FileSync = require('lowdb/adapters/FileSync')
 const client = new Discord.Client()
+const ms = require ("ms");
 var prefix = ("/")
 
 //début xp
@@ -100,6 +101,33 @@ bot.on('message', message =>{
     }
     })
     //fin clear
+
+    //début mute
+    bot.on('message', message => {
+        if(message.content.startsWith(prefix + 'mute')) {
+            let modRole = message.guild.roles.find("name", "PermMute");
+            if(!modRole) return message.reply("Il n'y as pas de grade **PermMute** sur le serveur, veuillez en créer un s'il vous plaît")
+            if(!message.member.roles.has(modRole.id)) {
+                return message.reply("Tu n'as pas la permissions de mute.")
+            }
+            let member = message.mentions.members.first();
+            if(!member) return message.reply("tu n'as pas mentionné de personne valide");
+            let muteRole = message.guild.roles.find("name", "Muted");
+            if(!muteRole) return message.reply("Il n'y as pas de grade **Muted** sur le serveur, veuillez en créer un s'il vous plaît");
+            let params = message.content.split(" ").slice(1);
+            let time = params[1];
+            if(!time) return message.reply("tu n'as pas spécifié de temps de mute.");
+
+            member.addRole(muteRole.id);
+            message.channel.send(`${message.author.username} à mute ${member.user.tag} pendant ${ms(ms(time), {long: true})} !`);
+
+            setTimeout(function() {
+              member.removeRole(muteRole.id);
+              message.channel.send(`${member.user.tag}, ton temps de mute est finit, tu peux désormais reparlé`)
+            }, ms(time));
+        }
+    })
+    //fin mute
 
 
 //début option bot
