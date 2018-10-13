@@ -269,4 +269,9 @@ bot.on('message', message => {
     message.channel.sendEmbed(embedcréateur)
 })
 
+bot.on('message', message => {
+    if(message.content === "trakafoins")
+    message.channel.send("TRAAAKAAAFOOIIINNNNS")
+})
+
 bot.login(process.env.TOKEN)
