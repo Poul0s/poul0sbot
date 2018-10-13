@@ -5,6 +5,7 @@ const FileSync = require('lowdb/adapters/FileSync')
 const client = new Discord.Client()
 var prefix = ("/")
 
+//début xp
 const adapter = new FileSync('database.json');
 const db = low(adapter);
 
@@ -32,14 +33,16 @@ bot.on('message', message => {
             var xpfinal = Object.values(xp);
             var xp_embed = new Discord.RichEmbed()
                 .setTitle(`Statistics d'xp de ${message.author.username}`)
-                .setColor('#F4D03F')
+                .setColor('#FE0000')
                 .setDescription("affichage des XP")
                 .addField("XP: ", `${xpfinal[1]} xp`)
-                .setFooter("Salut :p")
-            message.channel.send({embed: xp_embed});
+                .setFooter("NejiBot")
+                .setTimestamp()
+                message.channel.sendEmbed(xp_embed)
         }}})
+        //fin xp
 
-
+//début kick ban
 bot.on('message', message =>{
     let command = message.content.split (" ")[0];
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -78,7 +81,9 @@ bot.on('message', message =>{
             message.reply(`${member.user.username} a été bannis du serveur.`).catch(console.error);
         }).catch(console.error)
     }})
+    //fin kick ban
 
+    //début clear
     bot.on('message', message => {
         if(message.content.startsWith(prefix + 'clear')) {
             let modRole = message.guild.roles.find("name", "PermMute");
@@ -94,9 +99,10 @@ bot.on('message', message =>{
             message.delete()
     }
     })
+    //fin clear
 
 
-
+//début option bot
 bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
     bot.user.setGame('use /help').catch(console.error)
@@ -104,25 +110,32 @@ bot.on('ready', function () {
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
 })
+//fin option bot
 
+//début nouveau membre
 bot.on('guildMemberAdd', function (member) {
     member.createDM().then(function (channel) {
         return channel.send("Bienvenue sur le serveur, n'hesite pas à utilisé la commande /help pour savoir les commande que je fais.")
     }).catch(console.error)
 })
+//fin nouveau membre
 
+//début bonjour
 bot.on('message', function (message) {
     if (message.content === 'Bonjour') {
         message.channel.send(`Salut ${message.author.username}`)
     }
 })
 
+
 bot.on('message', function (message) {
     if (message.content === 'bonjour') {
         message.channel.send(`Salut ${message.author.username}`)
     }
 })
+//fin bonjour
 
+//début help
 //ancienne commande help en cas de problème
 //bot.on('message', function (message) {
 //    if (message.content === prefix + 'help') {
@@ -165,35 +178,43 @@ bot.on('message', message => {
             .setTimestamp()
     message.channel.sendEmbed(embed)
 })
+//fin help
 
-
+//début join
  bot.on('message', function (message) {
     if (message.content === prefix + 'join') {
         message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`)
     }
 })
+//fin join
 
+//début invite
 bot.on('message', function (message) {
     if (message.content === prefix + 'invite') {
         message.channel.send(`Pour pouvoir m'invité sur ton serveur discord, va sur ce lien http://bit.ly/NejiBot ${message.author.username}.`)
     }
 })
+//fin invite
 
+//début ping
 bot.on('message', function (message) {
     if (message.content === prefix + 'ping'){
         message.channel.sendMessage('Le temps de latence sur le serveur = `' + `${message.createdTimestamp - Date.now()}` + ' ms`')
     }
 })
+//fin ping
 
+//début liste des serveur
 bot.on('message', function (message) {
     if (message.content === prefix + 'serverlist'){
         message.channel.send(bot.guilds.map(r => r.name + ` | **${r.memberCount}** membres`))
     }
 })
+//fin liste des serveur
 
 
 
-
+//début 8ball
 bot.on('message', function (message) {
     if (message.content.startsWith(prefix + "8ball")){
      let args = message.content.split(" ").slice(1);
@@ -216,7 +237,9 @@ bot.on('message', function (message) {
             .addField("Réponse", reponse)
             message.channel.sendEmbed(bembed)
         }})
+        //fin 8ball
 
+//début info
 bot.on('message', message => {
     if(message.content === prefix + "info")
     var embed = new Discord.RichEmbed()
@@ -227,7 +250,9 @@ bot.on('message', message => {
         .addField("Membres total sur le discord", message.guild.memberCount)
     message.channel.sendEmbed(embed)
 })
+//fin info
 
+//début chat global
 bot.on('message', function (message) {
     if(message.content.startsWith(prefix + 'NejiChat')) {
         let args = message.content.split(" ").slice(1);
@@ -248,7 +273,9 @@ bot.on('message', function (message) {
         bot.channels.findAll('name', 'neji-chat').map(channel => channel.send(embedglobal))
     }
 })
+//fin chat global
 
+//début créateur
 
 //bot.on('message', function (message) {
 //    if (message.content === prefix + "createur")
@@ -268,10 +295,13 @@ bot.on('message', message => {
         .setTimestamp()
     message.channel.sendEmbed(embedcréateur)
 })
+//fin créateur
 
+//début trakafoins
 bot.on('message', message => {
     if(message.content === "trakafoins")
     message.channel.send("TRAAAKAAAFOOIIINNNNS")
 })
+//fin trakafoins
 
 bot.login(process.env.TOKEN)
