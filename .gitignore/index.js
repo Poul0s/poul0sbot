@@ -119,7 +119,7 @@ bot.on('message', message =>{
             if(!time) return message.reply("tu n'as pas spécifié de temps de mute.");
 
             member.addRole(muteRole.id);
-            message.channel.send(`${message.author.username} à mute ${member.user.tag} pendant ${ms(ms(time), {long: true})} !`);
+            message.channel.send(`${message.author.username} à mute ${member.user.tag} pendant ${ms(ms(time), {long: true})} ! PS: si le grade se redémarre ou crash avant la fin du mute, il faudra enlevé le grade Muted manuellement.`);
 
             setTimeout(function() {
               member.removeRole(muteRole.id);
