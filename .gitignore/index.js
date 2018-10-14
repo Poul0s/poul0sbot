@@ -175,8 +175,10 @@ if(!reportschannel) {
     message.reply("il n'y avait pas de salon report, il viens d'être créer, merci de refaire un report.")
 }
 
-return bot.channels.findAll("name", "reports").map(channel => channel.send(reportEmbed));
+//return bot.channels.findAll("name", "reports").map(channel => channel.send(reportEmbed));
+reportschannel.send(reportEmbed);
 
+return;
     
 }
 
