@@ -308,12 +308,14 @@ bot.on("message", message => {
 } 
 })
 */
+
 bot.on('message', message => {
     if(message.content.startsWith(prefix + 'AnnonceNeji')) {
       let args8 = message.content.split(" ").slice(1);
     let nej1 = message.guild.channels.find('name', 'annonce-neji')
     if(!nej1){
-     message.guild.createChannel("annonce-neji")
+     //message.guild.createChannel("annonce-neji")
+     return message.reply(`Il n'y as pas de salon **annonce-neji** sur les serveur ${bot.channels.findAll("name", "annonce-neji").map()}`)
  }
  if(!args8) return message.reply("Tu dois entrer un message")
  
@@ -330,6 +332,7 @@ bot.on('message', message => {
  }  
     }  
 })
+
 
  
 
