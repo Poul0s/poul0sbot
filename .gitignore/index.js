@@ -6,13 +6,13 @@ const ms = require ("ms");
 var prefix = ("/")
 
 //début option bot
-bot.on('ready', function () {
+bot.on('message', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
        bot.user.setActivity({name: "use /help", type: "STREAMING", url: "https://www.twitch.tv/realnejibot"}).catch(console.error)
        .then(() => console.log('setactivity reussi'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
-        
+        bot.user.setStatus("dnd")
 });
 //fin option bot
 
