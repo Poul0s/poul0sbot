@@ -5,6 +5,17 @@ const FileSync = require('lowdb/adapters/FileSync')
 const ms = require ("ms");
 var prefix = ("/")
 
+//début option bot
+bot.on('ready', function () {
+    // bot.user.setAvatar('./avatar.png').catch(console.error)
+       bot.user.setActivity({name: "use /help", type: "STREAMING", url: "https://www.twitch.tv/realnejibot"}).catch(console.error)
+       .then(() => console.log('setactivity reussi'))
+    bot.user.setUsername('NejiBot').catch(console.error)
+        .then(() => console.log('setusername mis en place'))
+        
+});
+//fin option bot
+
 
 //début xp
 const adapter = new FileSync('database.json');
@@ -444,16 +455,7 @@ if (command === "chifoumi"){
     */
 
 
-//début option bot
-bot.on('ready', function () {
-    // bot.user.setAvatar('./avatar.png').catch(console.error)
-    bot.user.setActivity('use /help', {type: "STREAMING"}).catch(console.error)
-        .then(() => console.log('setGame mis en place'))
-    bot.user.setUsername('NejiBot').catch(console.error)
-        .then(() => console.log('setusername mis en place'))
-        
-});
-//fin option bot
+
 
 
 
