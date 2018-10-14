@@ -5,8 +5,7 @@ const FileSync = require('lowdb/adapters/FileSync')
 const ms = require ("ms");
 var prefix = ("/")
 
-//début option bot
-bot.on('message', function () {
+bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
        bot.user.setActivity({name: "use /help", type: "STREAMING", url: "https://www.twitch.tv/realnejibot"}).catch(console.error)
        .then(() => console.log('setactivity reussi'))
@@ -14,7 +13,6 @@ bot.on('message', function () {
         .then(() => console.log('setusername mis en place'))
         bot.user.setStatus("dnd")
 });
-//fin option bot
 
 
 //début xp
