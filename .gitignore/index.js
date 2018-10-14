@@ -141,6 +141,33 @@ bot.on('message', message =>{
     }
 //fin bonjour
 
+if(command === 'report'){
+let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+if(!rUser) return message.reply("tu n'as pas mentionné d'utilisateur");
+let reason = args.join(" ").slice(22);
+if(!reason) return message.reply("Tu n'a pas mis de réson.")
+
+let reportEmbed = new Discord.RichEmbed()
+.setTitle(`Report`)
+.setColor("#FE0000")
+.addField(`Joueur Report`, message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0])))
+.addField(`Pour`, reason)
+.addField(`Joueur qui a report`, message.author.tag)
+.addField(`Dans le channel`, message.channel)
+.setFooter("NejiBot")
+.setTimestamp()
+
+let reportschannel = message.guild.channels.find(`name`, "reports")
+if(!reportschannel) {
+    message.guild.createChannel("reports")
+    message.reply("il n'y avait pas de salon report, il viens d'être créer, merci de refaire un report.")
+}
+
+return bot.channels.findAll("name", "reports").map(channel => channel.send(reportEmbed));
+
+    
+}
+
 //début help
 //ancienne commande help en cas de problème
 //bot.on('message', function (message) {
@@ -417,7 +444,7 @@ if (command === "chifoumi"){
 //début option bot
 bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
-    bot.user.setActivity('use /help').catch(console.error)
+    bot.user.setActivity('use /help', {type: "STREAMING"}).catch(console.error)
         .then(() => console.log('setGame mis en place'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
