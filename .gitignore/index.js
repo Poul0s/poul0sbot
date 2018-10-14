@@ -221,6 +221,8 @@ return;
             .addField("/créateur", "Permet de savoir qui m'a crée")
             .addField("/clear", "Permet d'effacer de 2 à 100 message.")
             .addField("/chifoumi", "Permet de faire un pierre feuille ciseaux avec le bot")
+            .addField("/report", "Permet de report un joueur pour une telle raison.")
+            .addField("/blague", "Le bot répond avec une blague aléatoire.")
             .addField("/mute", "Permet de mute un utilisateur (/mute @Poul0s#8358 10m) /x PS: Faite gaf que le grade Muted n'ai pas les permissions de parle et d'envoyer des message.")
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
