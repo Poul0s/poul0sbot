@@ -611,13 +611,13 @@ if(message.content.startsWith(prefix + "chifoumi pierre")){
 //début nouveau membre
 bot.on('guildMemberAdd', function (member) {
     member.createDM().then(function (channel) {
-        return channel.send("Bienvenue sur le serveur, n'hesite pas à utilisé la commande /help pour savoir les commande que je fais.");
+        return channel.send("Bienvenue sur le serveur, n'hesite pas à utilisé la commande /help pour savoir les commande que je fais.")
     }).catch(console.error)
 });
 
 
-bot.on("guildMemberAdd", member => {
-    let joinchannel = message.guild.channels.find(`name`, "hi-bye")
+bot.on("guildMemberAdd", function (member) {
+    let joinchannel = member.guild.channels.find(`name`, "hi-bye")
 if(!joinchannel) {
     message.guild.createChannel("hi-bye")
     const joinembed2 = new Discord.RichEmbed()
@@ -634,10 +634,10 @@ return;
 }
 const joinembed = new Discord.RichEmbed()
 .setAuthor(`${member.username}`, member.displayAvatarURL)
-.setImage(member.displayAvatarURL)
+.setImage(`${member.displayAvatarURL}`)
 .setTitle("Nouveau membre")
 .setColor("#FE0000")
-.addField(`Bienvenue à ${member.tag} sur le serveur ${message.guild.name}`)
+.addField(`Bienvenue à ${member.tag} sur le serveur ${message.guild.name}`, "N'hésite pas à utilisé la commande /help")
 .setFooter("NejiBot")
 .setTimestamp()
 joinchannel.send(joinembed);
