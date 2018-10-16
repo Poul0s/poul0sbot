@@ -59,12 +59,13 @@ bot.on('message', message => {
         //fin xp
 
 //début kick ban
-bot.on('message', message =>{
+bot.on('message', message => {
     let command = message.content.split (" ")[0];
+    let cmd = command
     const args = message.content.slice(prefix.length).split(/ +/);
     command = args.shift().toLowerCase();
 
-    if (command === "kick") {
+    if (cmd === "kick") {
         let modRole = message.guild.roles.find("name", "PermKick");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermKick** sur le serveur, veuillez un créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.if)) {
@@ -230,6 +231,17 @@ return;
             .setTimestamp()
     message.channel.send(embed);
 //fin help
+
+if(message.content === "#GABARD"){
+    message.channel.send("Muena muena muene kisuéyawésa")
+}
+
+/*
+if(message.content === `${bot.Client.tag}`){
+    message.channel.send("Oui, c'est moi")
+}
+pb*/
+
 
 //début join
 if(command === 'join') {
@@ -495,30 +507,78 @@ if (command === "token")
     message.channel.send(`${message.author.username} mon token est T UN MALADE JAMAIS JLE DIRAIT`);
 //fin token 
 
+//début test
+        
+ 
+//fin test
+
 //début chifoumi
-if (command === "chifoumi"){
-     let argspierre = message.content.split(" ").slice(1);
-     let ttepierre = argspierre.join(" ")
-        if (!ttepierre){
-            return message.reply("Tu n'as pas choisix ton action")};
+if(message.content.startsWith(prefix + "chifoumi pierre")){
 
-            var replys = [
-                "feuille",
-                "pierre",
-                "ciseaux"
-            ]
+           var replysp = [
+               "feuille, perdu, la prochaine fois peut être.",
+               "pierre, égalité",
+               "ciseaux, bravo, tu as gagné !"
+           ]
 
-            let reponse = (replys[Math.floor(Math.random() * replys.length)])
-        var embedpierre = new Discord.RichEmbed()
-            .setTitle("chifoumi")
-            .addField(`${message.author.username} :`, ttepierre)
-            .addField(`NejiBot :`, reponse)
-            .setFooter("NejiBot")
-            .setTimestamp()
-            .setColor("FE0000")
-            message.channel.send(embedpierre);
-        }
+           let reponsep = (replysp[Math.floor(Math.random() * replysp.length)])
+       var embedpierre = new Discord.RichEmbed()
+           .setTitle("chifoumi")
+           .addField(`${message.author.username} :`, "pierre")
+           .addField(`NejiBot :`, reponsep)
+           .setFooter("NejiBot")
+           .setTimestamp()
+           .setColor("FE0000")
+           message.channel.send(embedpierre);
+       }
+       if (message.content.startsWith(prefix + "chifoumi feuille")){
+        
+               var replysf = [
+                   "feuille, égalité",
+                   "pierre, bravo tu as gagné",
+                   "ciseaux, perdu, tu peux gagnera la prochaine fois peut être"
+               ]
+   
+               let reponsef = (replysf[Math.floor(Math.random() * replysf.length)])
+           var embedfeuille = new Discord.RichEmbed()
+               .setTitle("chifoumi")
+               .addField(`${message.author.username} :`, "feuille")
+               .addField(`NejiBot :`, reponsef)
+               .setFooter("NejiBot")
+               .setTimestamp()
+               .setColor("FE0000")
+               message.channel.send(embedfeuille);
+           }
+           if (message.content.startsWith(prefix + "chifoumi ciseaux")){
+            let argspierre = message.content.split(" ").slice(1);
+            let ttepierre = argspierre.join(" ")
+               if (!ttepierre){
+                   return message.reply("Tu n'as pas choisix ton action")};
+       
+                   var replysc = [
+                       "feuille",
+                       "pierre",
+                       "ciseaux"
+                   ]
+       
+                   let reponsec = (replysc[Math.floor(Math.random() * replysc.length)])
+               var embedciseaux = new Discord.RichEmbed()
+                   .setTitle("chifoumi")
+                   .addField(`${message.author.username} :`, "ciseaux")
+                   .addField(`NejiBot :`, reponsec)
+                   .setFooter("NejiBot")
+                   .setTimestamp()
+                   .setColor("FE0000")
+                   message.channel.send(embedciseaux);
+               }
+               if(message.content.startsWith(prefix + "chifoumi")){
+                let argspierre = message.content.split(" ").slice(1);
+                let ttepierre = argspierre.join(" ")
+                   if (!ttepierre){
+                       return message.reply(`Tu dois choisir entre "/chifoumi pierre", "/chifoumi feuille" ou "/chifoumi ciseaux"`)};
+               }
         //fin chifoumi
+        
 
         /*
         //début annonce all serv
@@ -554,6 +614,36 @@ bot.on('guildMemberAdd', function (member) {
         return channel.send("Bienvenue sur le serveur, n'hesite pas à utilisé la commande /help pour savoir les commande que je fais.");
     }).catch(console.error)
 });
+
+
+bot.on("guildMemberAdd", member => {
+    let joinchannel = message.guild.channels.find(`name`, "hi-bye")
+if(!joinchannel) {
+    message.guild.createChannel("hi-bye")
+    const joinembed2 = new Discord.RichEmbed()
+.setAuthor(`${member.username}`, member.displayAvatarURL)
+.setImage(member.displayAvatarURL)
+.setTitle("Nouveau membre")
+.setColor("#FE0000")
+.addField(`Bienvenue à ${member.tag} sur le serveur ${message.guild.name}`)
+.setFooter("NejiBot")
+.setTimestamp()
+joinchannel.send(joinembed2);
+
+return;
+}
+const joinembed = new Discord.RichEmbed()
+.setAuthor(`${member.username}`, member.displayAvatarURL)
+.setImage(member.displayAvatarURL)
+.setTitle("Nouveau membre")
+.setColor("#FE0000")
+.addField(`Bienvenue à ${member.tag} sur le serveur ${message.guild.name}`)
+.setFooter("NejiBot")
+.setTimestamp()
+joinchannel.send(joinembed);
+
+return;
+})
 //fin nouveau membre
 })
 
