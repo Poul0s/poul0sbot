@@ -10,7 +10,7 @@ bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
        //bot.user.setActivity({name: "use /help", type: "STREAMING", url: "https://www.twitch.tv/realnejibot"}).catch(console.error)
        //.then(() => console.log('setactivity reussi'))
-       bot.user.setActivity(`use /help | ${bot.guilds.size} serveurs`, { type: 'STREAMING', url: 'https://www.twitch.tv/realnejibot' }).then(() => console.log('setActivity reussi'))
+       bot.user.setActivity(`use /help | ${bot.guilds.size} serveurs `, { type: 'STREAMING', url: 'https://www.twitch.tv/realnejibot' }).then(() => console.log('setActivity reussi'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
         bot.user.setStatus("dnd")
@@ -608,6 +608,9 @@ if(message.content.startsWith(prefix + "chifoumi pierre")){
 
 
 
+
+})
+
 //début nouveau membre
 bot.on('guildMemberAdd', function (member) {
     member.createDM().then(function (channel) {
@@ -616,28 +619,32 @@ bot.on('guildMemberAdd', function (member) {
 });
 
 
-bot.on("guildMemberAdd", function (member) {
+bot.on("guildMemberAdd", member => {
     let joinchannel = member.guild.channels.find(`name`, "hi-bye")
 if(!joinchannel) {
-    message.guild.createChannel("hi-bye")
+    member.guild.createChannel("hi-bye")
+    /*
+    let joinchannel2 = member.guild.channels.find(`name`, "hi-bye")
+    timeout: 1000
     const joinembed2 = new Discord.RichEmbed()
-.setAuthor(`${member.username}`, member.displayAvatarURL)
-.setImage(member.displayAvatarURL)
+.setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
+.setImage(`${member.user.displayAvatarURL}`)
 .setTitle("Nouveau membre")
 .setColor("#FE0000")
-.addField(`Bienvenue à ${member.tag} sur le serveur ${message.guild.name}`)
+.addField(`Bienvenue à ${member.user.tag} sur le serveur ${member.guild.name}`)
 .setFooter("NejiBot")
 .setTimestamp()
-joinchannel.send(joinembed2);
+joinchannel2.send(joinembed2);
+*/
 
 return;
 }
 const joinembed = new Discord.RichEmbed()
-.setAuthor(`${member.username}`, member.displayAvatarURL)
-.setImage(`${member.displayAvatarURL}`)
+.setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
+.setImage(`${member.user.displayAvatarURL}`)
 .setTitle("Nouveau membre")
 .setColor("#FE0000")
-.addField(`Bienvenue à ${member.tag} sur le serveur ${message.guild.name}`, "N'hésite pas à utilisé la commande /help")
+.addField(`Bienvenue à ${member.user.tag} sur le serveur ${member.guild.name}`, "N'hésite pas à utilisé la commande /help")
 .setFooter("NejiBot")
 .setTimestamp()
 joinchannel.send(joinembed);
@@ -645,6 +652,5 @@ joinchannel.send(joinembed);
 return;
 })
 //fin nouveau membre
-})
 
 bot.login(process.env.TOKEN)
