@@ -95,11 +95,28 @@ bot.on('message', message => {
         if(!kickMember) {
             return message.reply ("Je n'arrive pas à expulser cet utilisateur, tu t'es peut être trompé ou tu as essayé de kick un joueur impossible à expulser")
         }
+        let params3 = message.content.split(" ").slice(1);
+        let réson2 = params3[1];
+        if(!réson2) return message.reply("tu n'as pas mis de réson à ton ban");
         if(!message.guild.member(bot.user).hasPermission("KICK_MEMBERS")) {
             return message.reply("Je n'ai pas la permissions de kick (KICK_MEMBERS").catch(console.error);
         }
         kickMember.kick.then(member =>{
-            message.reply(`${member.user.username} a été expulser du serveur avec succès`).catch(console.error);
+//            message.reply(`${member.user.username} a été expulser du serveur avec succès`).catch(console.error);
+            let authorkick = message.author
+            var embedkick = new Discord.RichEmbed()
+            .setAuthor(authorkick.username, authorkick.displayAvatarURL)
+            .setTitle("kick")
+            .addField("Auteur du kick :", `${message.author.username}`)
+            .addField("Personne kick :", `${member.user.username}`)
+            .setImage(`${member.user.displayAvatarURL}`)
+            .addField("réson :", réson2)
+            .setFooter("NejiBot")
+            .setTimestamp()
+            message.channel.send(embedkick);
+            member.createDM().then(function (channel) {
+                return channel.send(`Tu as été kick du serveur ${message.guild.name} pour ${réson}`)
+            });
         }).catch(console.error)
     }
     if (command === "ban") {
@@ -110,8 +127,26 @@ bot.on('message', message => {
         }
         const member = message.mentions.members.first();
         if (!member) return message.reply("Tu as oublier de mentionner une personne.");
-        member.ban().then(member => {
-            message.reply(`${member.user.username} a été bannis du serveur.`).catch(console.error);
+        let params2 = message.content.split(" ").slice(1);
+        let réson = params2[1];
+        if(!réson) return message.reply("tu n'as pas mis de réson à ton ban");
+        member.ban().then(member => { 
+//            message.reply(`${member.user.username} a été bannis du serveur.`).catch(console.error);
+            let authorban = message.author
+            var embedban = new Discord.RichEmbed()
+            .setAuthor(authorban.username, authorban.displayAvatarURL)
+            .setTitle("Ban")
+            .addField("Auteur du ban :", `${message.author.username}`)
+            .addField("Personne banni :", `${member.user.username}`)
+            .setImage(`${member.user.displayAvatarURL}`)
+            .addField("réson :", réson)
+            .setFooter("NejiBot")
+            .setTimestamp()
+            message.channel.send(embedban);
+
+            member.createDM().then(function (channel) {
+                return channel.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
+            });
         }).catch(console.error)
     }
     //fin kick ban
