@@ -77,7 +77,7 @@ bot.on('message', message => {
 //début kick ban
 bot.on('message', message => {
     let command = message.content.split (" ")[0];
-    let cmd = command
+    let cmd = message.content.split (" ")[0];
     const args = message.content.slice(prefix.length).split(/ +/);
     command = args.shift().toLowerCase();
 
@@ -253,6 +253,43 @@ bot.on('message', message => {
             .addField("/report", "Permet de report un joueur pour une telle raison.")
             .addField("/blague", "Le bot répond avec une blague aléatoire.")
             .addField("/mute", "Permet de mute un utilisateur (/mute @Poul0s#8358 10m) /x PS: Faite gaf que le grade Muted n'ai pas les permissions de parle et d'envoyer des message.")
+            .addField("/énigme", "Le bot répond avec une énigme aléatoire")
+            /*
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            .addField("")
+            */
             .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
             .setColor("#FE0000")
             .setFooter("NejiBot")
@@ -325,7 +362,50 @@ bot.on('message', message => {
         message.channel.send(bembed);
     }
     //fin 8ball
+
+    if (message.content === "/solution 1"){
+        message.channel.send(`${message.author.username} : Hier, on était le 31 décembre, elle a eu 18 ans. Cette année, elle va avoir 19 ans et l'année prochaine, 20 ans.`);
+    }
+
+    if (message.content === "/solution 2"){
+        message.channel.send(`${message.author.username} : 3 car il reste l'odorat, le toucher et le goût. Muet ne correspond pas à la privation d'un sens.`)
+    }
+
+    if (message.content === "/solution 3"){
+        message.channel.send(`${message.author.username} : le someil`)
+    }
+
+    if (message.content === "/solution 4"){
+        message.channel.send(`${message.author.username} : La vie ! Plus on avance dans le temps, plus on s'approche de la mort`)
+    }
+
+    if (message.content === "/solution 5"){
+        message.channel.send(`${message.author.username} : L'équilibre, car lorsqu'on perd l'équilibre on tombe.`)
+    }
+
+    if(command === "énigme"){
+        var enigme = [
+            "01000010 01110010 01100001 01110110 01101111 00101100 00100000 01110100 01110101 00100000 01100001 01110011 00100000 01100011 01101111 01101101 01110000 01110010 01101001 01110011 00100000 01110001 01110101 01100101 00100000 01100011 01011100 00100111 11101001 01110100 01100001 01101001 01110100 00100000 01100100 01110101 00100000 01100010 01101001 01101110 01100001 01101001 01110010 01100101 (sans solution)",
+            "Avant-hier, Julie avait 17 ans mais l'année prochaine, elle aura 20 ans. Comment est-ce possible ? (pour la solution ecrit /solution 1)",
+            "Si je suis muet, aveugle et sourd, combien de sens me reste-t-il ?(normalement il y en as 5 mdr on sait jamais) (pour la solution écrit /solution 2)",
+            "On me cherche la nuit, Quand on me trouve, On ne s'en rend compte que quand je suis parti. Qui suis-je ? (pour la solution écrivez /solution 3)",
+            "Qu'est ce qui s'allonge et rétrécit en même temps ? (pour solution : /solution 4)",
+            "Si tu me perds, tu tombes. Qui suis-je ? (solution : /solution 5"
+        ]
+        let enigme2 = (enigme[Math.floor(Math.random() * enigme.length)])
+        let usere = message.author
+        let embede = new Discord.RichEmbed()
+        .setTitle("énigme")
+            .setAuthor(usere.username, usere.displayAvatarURL)
+            .addField("L'énigme est:", enigme2)
+            .setColor("#FE0000")
+            .setFooter("NejiBot")
+            .setTimestamp()
+        message.channel.send(embede)
+    }
+
     if(command === "blague"){
+
         var blague = [
             "Quelle mamie fait peur au voleur ? Mamie Traillette",
             "J'ai fait une blague sur les magazin, mais elle a pas supermarché",
@@ -387,12 +467,7 @@ bot.on('message', message => {
             "Que dit un informaticiens quand il s'ennui ? Je me fichier",
             "Où va messi quand il se blessent ? à la pharmessi",
             "Que demande un footballeur à son coiffeur ? la coupe du monde",
-            /*"",
-            "",
-            "",
-            "",
-            "",
-            "",*/
+            "Quel mot devient drôle après qu'on lui ajoute une lettre ? C'est le mot rôle (d-rôle).",
             "Quel est l'animal le plus connecté ? Le porc USB"
         ]
         let reponseblague = (blague[Math.floor(Math.random() * blague.length)])
@@ -679,5 +754,6 @@ bot.on("guildMemberAdd", member => {
     return;
 })
 //fin nouveau membre
+
 
 bot.login(process.env.TOKEN)
