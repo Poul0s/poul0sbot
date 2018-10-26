@@ -81,10 +81,10 @@ bot.on('message', message => {
     const args = message.content.slice(prefix.length).split(/ +/);
     command = args.shift().toLowerCase();
 
-    if (cmd === "kick") {
+    if (command === "kick") {
         let modRole = message.guild.roles.find("name", "PermKick");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermKick** sur le serveur, veuillez un créer un s'il vous plaît")
-        if(!message.member.roles.has(modRole.if)) {
+        if(!message.member.roles.has(modRole.id)) {
             return message.reply("tu n'as pas la permission de kick.").catch(console.error);
         }
         if(message.mentions.users.size === 0) {
@@ -101,20 +101,20 @@ bot.on('message', message => {
         if(!message.guild.member(bot.user).hasPermission("KICK_MEMBERS")) {
             return message.reply("Je n'ai pas la permissions de kick (KICK_MEMBERS").catch(console.error);
         }
-        kickMember.kick.then(member =>{
+        kickMember.kick().then(member => {
 //            message.reply(`${member.user.username} a été expulser du serveur avec succès`).catch(console.error);
             let authorkick = message.author
             var embedkick = new Discord.RichEmbed()
             .setAuthor(authorkick.username, authorkick.displayAvatarURL)
             .setTitle("kick")
             .addField("Auteur du kick :", `${message.author.username}`)
-            .addField("Personne kick :", `${member.user.username}`)
-            .setImage(`${member.user.displayAvatarURL}`)
+            .addField("Personne kick :", `${kickMember.user.username}`)
+            .setImage(`${kickMember.user.displayAvatarURL}`)
             .addField("réson :", réson2)
             .setFooter("NejiBot")
             .setTimestamp()
             message.channel.send(embedkick);
-            member.createDM().then(function (channel) {
+            kickMember.createDM().then(function (channel) {
                 return channel.send(`Tu as été kick du serveur ${message.guild.name} pour ${réson}`)
             });
         }).catch(console.error)
@@ -145,7 +145,7 @@ bot.on('message', message => {
             message.channel.send(embedban);
 
             member.createDM().then(function (channel) {
-                return channel.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
+                return member.channel.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
             });
         }).catch(console.error)
     }
