@@ -95,8 +95,8 @@ bot.on('message', message => {
         if(!kickMember) {
             return message.reply ("Je n'arrive pas à expulser cet utilisateur, tu t'es peut être trompé ou tu as essayé de kick un joueur impossible à expulser")
         }
-        let params3 = message.content.split(" ").slice(1);
-        let réson2 = params3[1];
+        let params3 = message.content.split(" " + kickMember + " ").slice(1);
+        let réson2 = params3
         if(!réson2) return message.reply("tu n'as pas mis de réson à ton ban");
         if(!message.guild.member(bot.user).hasPermission("KICK_MEMBERS")) {
             return message.reply("Je n'ai pas la permissions de kick (KICK_MEMBERS").catch(console.error);
@@ -110,7 +110,7 @@ bot.on('message', message => {
             .addField("Auteur du kick :", `${message.author.username}`)
             .addField("Personne kick :", `${kickMember.user.username}`)
             .setImage(`${kickMember.user.displayAvatarURL}`)
-            .addField("réson :", réson2)
+            .addField("raison :", réson2)
             .setFooter("NejiBot")
             .setTimestamp()
             message.channel.send(embedkick);
@@ -127,8 +127,8 @@ bot.on('message', message => {
         }
         const member = message.mentions.members.first();
         if (!member) return message.reply("Tu as oublier de mentionner une personne.");
-        let params2 = message.content.split(" ").slice(1);
-        let réson = params2[1];
+        let params2 = message.content.split(" " + member + " ").slice(1);
+        let réson = params2
         if(!réson) return message.reply("tu n'as pas mis de réson à ton ban");
         member.ban().then(member => { 
 //            message.reply(`${member.user.username} a été bannis du serveur.`).catch(console.error);
@@ -139,13 +139,13 @@ bot.on('message', message => {
             .addField("Auteur du ban :", `${message.author.username}`)
             .addField("Personne banni :", `${member.user.username}`)
             .setImage(`${member.user.displayAvatarURL}`)
-            .addField("réson :", réson)
+            .addField("raison :", réson)
             .setFooter("NejiBot")
             .setTimestamp()
             message.channel.send(embedban);
 
             member.createDM().then(function (channel) {
-                return member.channel.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
+                return channel.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
             });
         }).catch(console.error)
     }
@@ -169,7 +169,7 @@ bot.on('message', message => {
 
 
     //début mute
-    if(cmd === 'mute') {
+    if(command === 'mute') {
         let modRole = message.guild.roles.find("name", "PermMute");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermMute** sur le serveur, veuillez en créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.id)) {
@@ -193,7 +193,7 @@ bot.on('message', message => {
     }
     //fin mute
 
-    if(cmd === 'ban+') {
+    if(command === 'ban+') {
         if(message.author.id === "300546341518573569") {
             const member = message.mentions.members.first();
             if (!member) return message.reply("Tu as oublier de mentionner une personne.");
@@ -775,6 +775,8 @@ bot.on('guildMemberAdd', function (member) {
 });
 
 
+
+
 bot.on("guildMemberAdd", member => {
     let joinchannel = member.guild.channels.find(`name`, "hi-bye")
     if(!joinchannel) {
@@ -808,6 +810,39 @@ bot.on("guildMemberAdd", member => {
     return;
 })
 //fin nouveau membre
+
+bot.on("guildMemberRemove", member => {
+    let leavechannel = member.guild.channels.find(`name`, "hi-bye")
+    if(!leavechannel) {
+        member.guild.createChannel("hi-bye")
+        /*
+        let joinchannel2 = member.guild.channels.find(`name`, "hi-bye")
+        timeout: 1000
+        const joinembed2 = new Discord.RichEmbed()
+    .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
+    .setImage(`${member.user.displayAvatarURL}`)
+    .setTitle("Nouveau membre")
+    .setColor("#FE0000")
+    .addField(`Bienvenue à ${member.user.tag} sur le serveur ${member.guild.name}`)
+    .setFooter("NejiBot")
+    .setTimestamp()
+    joinchannel2.send(joinembed2);
+    */
+
+        return;
+    }
+    const leaveembed = new Discord.RichEmbed()
+        .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
+        .setImage(`${member.user.displayAvatarURL}`)
+        .setTitle("membre parti")
+        .setColor("#FE0000")
+        .addField(`aurevoir et à bientôt ${member.user.tag} sur le serveur ${member.guild.name}`, "nous attendions ton retour avec impatience (ou pas)")
+        .setFooter("NejiBot")
+        .setTimestamp()
+    leavechannel.send(leaveembed);
+
+    return;
+})
 
 
 bot.login(process.env.TOKEN)
