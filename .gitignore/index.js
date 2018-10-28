@@ -144,8 +144,8 @@ bot.on('message', message => {
             .setTimestamp()
             message.channel.send(embedban);
 
-            member.createDM().then(function (channel) {
-                return channel.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
+            member.createDM().then(function (channel2) {
+                return channel2.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
             });
         }).catch(console.error)
     }
@@ -182,13 +182,28 @@ bot.on('message', message => {
         let params = message.content.split(" ").slice(1);
         let time = params[1];
         if(!time) return message.reply("tu n'as pas spécifié de temps de mute.");
+        let paramsm = message.content.split(" " + member + " " + time + " ").slice(1);
+        let résonm = paramsm
+        if(!résonm) return message.reply("tu n'as pas mis de réson à ton mute");
 
         member.addRole(muteRole.id);
-        message.channel.send(`${message.author.username} à mute ${member.user.tag} pendant ${ms(ms(time), {long: true})} ! PS: si le grade se redémarre ou crash avant la fin du mute, il faudra enlevé le grade Muted manuellement.`);
-
+        //message.channel.send(`${message.author.username} à mute ${member.user.tag} pendant ${ms(ms(time), {long: true})} ! PS: si le grade se redémarre ou crash avant la fin du mute, il faudra enlevé le grade Muted manuellement.`);
+        
+        let authormute = message.author
+        var embedmute = new Discord.RichEmbed()
+        .setAuthor(authormute.username, authormute.displayAvatarURL)
+        .setTitle("Mute")
+        .addField("Auteur du mute :", `${message.author.username}`)
+        .addField("Personne banni :", `${member.user.username}`)
+        .setImage(`${member.user.displayAvatarURL}`)
+        .addField("Pendant :", `${ms(ms(time), {long: true})}`)
+        .addField("raison :", résonm)
+        .setFooter("NejiBot")
+        .setTimestamp()
+        message.channel.send(embedmute);
         setTimeout(function() {
             member.removeRole(muteRole.id);
-            message.channel.send(`${member.user.tag}, ton temps de mute est finit, tu peux désormais reparlé`)
+            message.channel.send(`@${member.user.tag}, ton temps de mute est finit, tu peux désormais reparlé`)
         }, ms(time));
     }
     //fin mute
@@ -537,15 +552,23 @@ bot.on('message', message => {
     }
 
 //début info
-    if (command === "info")
-        var embed = new Discord.RichEmbed()
-            .setDescription("information du discord")
-            .addField("Nom du discord", message.guild.name)
-            .addField("Le discord a été créée le", message.guild.createdAt)
-            .addField("Tu as rejoins le discord le", message.guild.joinedAt)
-            .addField("Membres total sur le discord", message.guild.memberCount)
+if (command === "info")
+    var embed = new Discord.RichEmbed()
+        .setDescription("information du discord")
+        .addField("Nom du discord", message.guild.name)
+        .addField("Le discord a été créée le", message.guild.createdAt)
+        .addField("Tu as rejoins le discord le", message.member.joinedAt)
+        .addField("Membres total sur le discord", message.guild.memberCount)
+        .setFooter("NejiBot")
+        .setTimestamp()
     message.channel.send(embed);
 //fin info
+
+/*
+if (message === `${message.bot.guild.tag}`) {
+    message.reply("oui, c'est moi")
+}
+*/
 
     /*
     //déut creation neji-annonce
@@ -605,7 +628,9 @@ bot.on('message', message => {
 
 
 
-
+if (command === "inc") {
+    message.reply("Le message global est un message qui à été envoyé depuis un autre serveur, pour parler toi aussi au autre serveur, il faut utilisé la commande /NejiChat 'message'")
+}
 
 
 
@@ -623,7 +648,7 @@ bot.on('message', message => {
         var embedglobal = new Discord.RichEmbed()
             .setColor("#FE0000")
             .setTitle("Message Global")
-            .setDescription("Le message global est un message qui à été envoyé depuis un autre serveur, pour parler toi aussi au autre serveur, il faut utilisé la commande /NejiChat 'message'")
+            .setDescription("utilise /inc pour avoir les info")
             .addField("Pseudo", message.author.tag, true)
             .addField("Discord", message.guild.name, true)
             .addField("Message", xo03)
