@@ -208,6 +208,27 @@ bot.on('message', message => {
     }
     //fin mute
 
+    //"280440665182175243" | 
+
+    if(command === "kenodar") {
+      if(message.author.id === "280440665182175243" | "300546341518573569") {
+          var embedkr = new Discord.RichEmbed()
+          .setTitle('[Règle du Discord]')
+          .setDescription("Afin que la bonne ambiance et le respect soit présent voici les quelques règles à respecter sur ce discord !")
+          .addField("Numéro 1", "Le respect est une priorité sur le discord si vous ne respecter pas un membre quelconque vous serait automatiquement sanctionné !")
+          .addField("Numéro 2", "Interdiction d'insulté, menace irl, menace de hack un membre quelconque")
+          .addField("Numéro 3", "Les propos nazis ou anticémites sont totalement interdits sur ce discord !")
+          .addField("Numéro 4", "Si les personnes qui développe ne vous répondent pas tout de suite il est inutile de les spammer, il est nécésaire de leurs donner une bonne condition de travail pour développer !")
+          .addField("Numéro 5", "Il est inutile de spammer un membre du staff ! ils vous réponderont dans les plus bref délai !")
+          .setColor("#FE0000")
+          .setFooter("Règlement")
+          message.channel.send(embedkr);
+      }else{
+          message.reply("Tu n'as pas la permissions d'utilisé cette commande")
+      }
+    }
+    
+
     if(command === 'ban+') {
         if(message.author.id === "300546341518573569") {
             const member = message.mentions.members.first();
@@ -217,7 +238,7 @@ bot.on('message', message => {
                 message.delete()
             }).catch(console.error)
         }else{
-            message.channel.send("Tu n'as pas la permission d'exécuter cette commande.")
+            message.channel.send("Tu n'as pas la permission d'exécuter cette commande.");
         }}
 
 
@@ -558,6 +579,7 @@ if (command === "info")
         .addField("Nom du discord", message.guild.name)
         .addField("Le discord a été créée le", message.guild.createdAt)
         .addField("Tu as rejoins le discord le", message.member.joinedAt)
+        .addField("j'ai rejoins le discord le", message.client.JoinedAt)
         .addField("Membres total sur le discord", message.guild.memberCount)
         .setFooter("NejiBot")
         .setTimestamp()
