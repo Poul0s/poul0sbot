@@ -223,6 +223,7 @@ bot.on('message', message => {
           .setColor("#FE0000")
           .setFooter("Règlement")
           message.channel.send(embedkr);
+          message.delete()
       }else{
           message.reply("Tu n'as pas la permissions d'utilisé cette commande")
       }
