@@ -4,19 +4,39 @@ const low  = require("lowdb")
 const FileSync = require('lowdb/adapters/FileSync')
 const ms = require ("ms");
 var prefix = ("/")
-
+var version = ("[1.0.0]")
+ 
+bot.on("message", message => {
+    var blackembed = new Discord.RichEmbed()
+  .setColor("RANDOM")
+  .setTitle("Commande impossible à effectuer!")
+  .addField("Vous ne pouvez pas m'utiliser car vous êtes banni du bot!", "Vous avez peut être essayé de me faire crash :/", true)
+  .setImage("http://www.parisenligne.com/wp-content/imgs/image-liste-noire-70.jpg")
+   if(message.content.startsWith(prefix)) {
+    if(message.author.id === "ID1") return message.channel.send(blackembed)
+  }
+})
 //début option bot
 bot.on('ready', function () {
     // bot.user.setAvatar('./avatar.png').catch(console.error)
     //bot.user.setActivity({name: "use /help", type: "STREAMING", url: "https://www.twitch.tv/realnejibot"}).catch(console.error)
     //.then(() => console.log('setactivity reussi'))
-    bot.user.setActivity(`use /help | ${bot.guilds.size} serveurs `, { type: 'STREAMING', url: 'https://www.twitch.tv/realnejibot' }).then(() => console.log('setActivity reussi'))
+    //bot.user.setActivity(`use /help | ${bot.guilds.size} serveurs `, { type: 'STREAMING', url: 'https://www.twitch.tv/realnejibot' }).then(() => console.log('setActivity reussi'))
     bot.user.setUsername('NejiBot').catch(console.error)
         .then(() => console.log('setusername mis en place'))
     bot.user.setStatus("dnd")
 });
+function changing_status() {
+     let status = [`/help | versions ${version}`, `/help | ${bot.guilds.size} serveurs`, `/help | ${bot.users.size} membre`, '/help | soon site web', '/help | /maj']
+    let random = status[Math.floor(Math.random() * status.length)]
+    bot.user.setActivity(random, { type: 'STREAMING', url: 'https://www.twitch.tv/realnejibot' })
+ }
+ 
+ bot.on("ready", () => {
+    console.log(`${bot.user.username} est en ligne sur ${bot.guilds.size} serveurs avec : ${bot.users.size} urilisateur`);
+    setInterval(changing_status, 5000);
+})
 //fin option bot
-
 /* juste rien
 bot.on('ready', memberbl => {
 let blacklist = ['256072394026778624', '390535949278380033', '367978177483505664'];
@@ -29,23 +49,20 @@ let foundInGuild = false;
     }
 })
 rien*/
-
+ 
 //Neji+ : https://discordapp.com/oauth2/authorize?client_id=503107250911444994&scope=bot&permissions=8
-
-
-
 //début xp
 const adapter = new FileSync('database.json');
 const db = low(adapter);
-
+ 
 db.defaults({ histoires: [], xp: []}).write()
-
+ 
 bot.on('message', message => {
-
+ 
     var msgauthor = message.author.id;
-
+ 
     if(message.author.bot)return;
-
+ 
     if(!db.get("xp").find({user: msgauthor}).value()){
         db.get("xp").push({user: msgauthor, xp: 1}).write();
     }else{
@@ -54,9 +71,9 @@ bot.on('message', message => {
         var userxp = Object.values(userxpdb)
         console.log(userxp)
         console.log(`Nombre d'xp: ${userxp[1]}`)
-
+ 
         db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1}).write();
-
+ 
         if (message.content === prefix + "xp"){
             var xp = db.get("xp").filter({user: msgauthor}).find('xp').value()
             var xpfinal = Object.values(xp);
@@ -70,25 +87,22 @@ bot.on('message', message => {
             message.channel.send(xp_embed);
         }}
 });
-
-
 //fin xp
-
 //début kick ban
 bot.on('message', message => {
     let command = message.content.split (" ")[0];
     let cmd = message.content.split (" ")[0];
     const args = message.content.slice(prefix.length).split(/ +/);
+    var auth = message.author
     command = args.shift().toLowerCase();
-
-    if (command === "kick") {
+    if (message.content.startsWith(prefix + "kick")) {
         let modRole = message.guild.roles.find("name", "PermKick");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermKick** sur le serveur, veuillez un créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.id)) {
             return message.reply("tu n'as pas la permission de kick.").catch(console.error);
         }
         if(message.mentions.users.size === 0) {
-
+ 
             return message.reply("Tu n'a pas mentionné de personne").catch(console.error);
         }
         let kickMember = message.guild.member(message.mentions.users.first());
@@ -119,7 +133,7 @@ bot.on('message', message => {
             });
         }).catch(console.error)
     }
-    if (command === "ban") {
+    if (message.content.startsWith(prefix + "ban")) {
         let modRole = message.guild.roles.find("name", "PermBan");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermBan** sur le serveur, veuillez un créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.id)) {
@@ -130,7 +144,7 @@ bot.on('message', message => {
         let params2 = message.content.split(" " + member + " ").slice(1);
         let réson = params2
         if(!réson) return message.reply("tu n'as pas mis de réson à ton ban");
-        member.ban().then(member => { 
+        member.ban().then(member => {
 //            message.reply(`${member.user.username} a été bannis du serveur.`).catch(console.error);
             let authorban = message.author
             var embedban = new Discord.RichEmbed()
@@ -143,16 +157,43 @@ bot.on('message', message => {
             .setFooter("NejiBot")
             .setTimestamp()
             message.channel.send(embedban);
-
+ 
             member.createDM().then(function (channel2) {
                 return channel2.send(`Tu as été bannis du serveur ${message.guild.name} pour ${réson}`)
             });
         }).catch(console.error)
     }
     //fin kick ban
-
+    if(message.content.startsWith(prefix + "maj")){
+        var embedmaj = new Discord.RichEmbed()
+        .setAuthor(auth.username, auth.displayAvatarURL)
+        .setTitle(`Maj ${version}`)
+        .setDescription("Pour voir toute les maj, utilise la commande /AllMaj")
+        .addField("Ajout :", "/giveaway | /maj | /AllMaj | /addRole")
+        .addField("Modification :", "/help | status")
+        .addField("/Giveaway :", "Permet d'organisé des concours.")
+        .addField("/maj", "Permet de voir les nouveauté de la maj la plus récente.")
+        .addField("/AllMaj", "permet de voir toutes les nouveauté de mise à jour jusqu'à 10 maj")
+        .addField("/addRole", "Permet d'ajouté un role à quelqu'un (peut être très utile sur téléphone)")
+        .addField("/help", "La commande /help s'affiche désormais en message privé.")
+        .addField("status", "le status change toute les 5 secondes désormais")
+        .setFooter("NejiBot")
+        .setTimestamp()
+        .setColor("FE0000")
+        return message.channel.send(embedmaj)
+    }
+    if(message.content.startsWith(prefix + "AllMaj")){
+        var embedmajall = new Discord.RichEmbed()
+        .setAuthor(auth.username, auth.displayAvatarURL)
+        .setTitle("Liste des maj")
+        .setDescription("Si vous voyer que ya qu'une seule maj c psk les autre se rajouterons au fur et a mesure")
+        .addField("maj [1.0.0]", "Nouveauté: /giveaway | /maj | /AllMaj | /addRole, Modification: /help | status")
+        .setFooter("Nejibot")
+        .setTimestamp()
+    }
+/*
     //début clear
-    if(command === 'clear') {
+    if(message.content.startsWith(prefix + 'clear')) {
         let modRole = message.guild.roles.find("name", "PermMute");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermMute** sur le serveur, veuillez un créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.id)) {
@@ -166,10 +207,9 @@ bot.on('message', message => {
         message.delete()
     }
     //fin clear
-
-
+*/
     //début mute
-    if(command === 'mute') {
+    if(message.content.startsWith(prefix + 'mute')) {
         let modRole = message.guild.roles.find("name", "PermMute");
         if(!modRole) return message.reply("Il n'y as pas de grade **PermMute** sur le serveur, veuillez en créer un s'il vous plaît")
         if(!message.member.roles.has(modRole.id)) {
@@ -185,10 +225,8 @@ bot.on('message', message => {
         let paramsm = message.content.split(" " + member + " " + time + " ").slice(1);
         let résonm = paramsm
         if(!résonm) return message.reply("tu n'as pas mis de réson à ton mute");
-
         member.addRole(muteRole.id);
         //message.channel.send(`${message.author.username} à mute ${member.user.tag} pendant ${ms(ms(time), {long: true})} ! PS: si le grade se redémarre ou crash avant la fin du mute, il faudra enlevé le grade Muted manuellement.`);
-        
         let authormute = message.author
         var embedmute = new Discord.RichEmbed()
         .setAuthor(authormute.username, authormute.displayAvatarURL)
@@ -207,10 +245,8 @@ bot.on('message', message => {
         }, ms(time));
     }
     //fin mute
-
-    //"280440665182175243" | 
-
-    if(command === "kenodar") {
+    //"280440665182175243" |
+    if(message.content.startsWith(prefix + "kenodar")) {
       if(message.author.id === "280440665182175243" | "300546341518573569") {
           var embedkr = new Discord.RichEmbed()
           .setTitle('[Règle du Discord]')
@@ -223,14 +259,11 @@ bot.on('message', message => {
           .setColor("#FE0000")
           .setFooter("Règlement")
           message.channel.send(embedkr);
-          message.delete()
       }else{
           message.reply("Tu n'as pas la permissions d'utilisé cette commande")
       }
     }
-    
-
-    if(command === 'ban+') {
+    if(message.content.startsWith(prefix +'ban+')) {
         if(message.author.id === "300546341518573569") {
             const member = message.mentions.members.first();
             if (!member) return message.reply("Tu as oublier de mentionner une personne.");
@@ -241,25 +274,19 @@ bot.on('message', message => {
         }else{
             message.channel.send("Tu n'as pas la permission d'exécuter cette commande.");
         }}
-
-
 //début bonjour
     if (message.content === 'Bonjour') {
         message.channel.send(`Salut ${message.author.username}`);
     }
-
-
     if (message.content === 'bonjour') {
         message.channel.send(`Salut ${message.author.username}`);
     }
 //fin bonjour
-
-    if(command === 'report'){
+    if(message.content.startsWith(prefix +  'report')){
         let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
         if(!rUser) return message.reply("tu n'as pas mentionné d'utilisateur");
         let reason = args.join(" ").slice(22);
         if(!reason) return message.reply("Tu n'a pas mis de réson.")
-
         let userr = message.author
         let reportEmbed = new Discord.RichEmbed()
             .setAuthor(userr.username, userr.displayAvatarURL)
@@ -271,43 +298,18 @@ bot.on('message', message => {
             .addField(`Dans le channel`, message.channel)
             .setFooter("NejiBot")
             .setTimestamp()
-
         let reportschannel = message.guild.channels.find(`name`, "reports")
         if(!reportschannel) {
             message.guild.createChannel("reports")
             message.reply("il n'y avait pas de salon report, il viens d'être créer, merci de refaire un report.")
         }
-
 //return bot.channels.findAll("name", "reports").map(channel => channel.send(reportEmbed));
         reportschannel.send(reportEmbed);
-
-        return;
-
     }
-
 //début help
-//ancienne commande help en cas de problème
-//bot.on('message', function (message) {
-//    if (message.content === prefix + 'help') {
-//        message.channel.send(`Les commande sont:
-//-**/help**
-//-**/ban**
-//-**/kick**
-//-**Bonjour**
-//-(soon)**/invite**
-//-**/join**
-//-**/serverlist**
-//-**/ping**(bugger un peut xD)
-//-(désactivé raison : bug)**/clear**
-//-**/8ball**(la commande ne marche pas, si un pro dev pourrait m'aider sur Poul0s#8358 , sa serait gentil.)
-//-**/info**
-//PS:La commande help n'est pas terminer.`)
-//    }
-//})
-//fin de l'ancienne commande help
-
-    if(command === "help")
-        var embed = new Discord.RichEmbed()
+    if(message.content.startsWith(prefix +  "help")){
+    let userre = message.author
+        let embed = new Discord.RichEmbed()
             .setTitle("Liste des commande")
             .addField("/help", "Permet de voir la liste des commande.")
             .addField("/ban", "Permet de bannir un utilisateur.")
@@ -326,10 +328,10 @@ bot.on('message', message => {
             .addField("/blague", "Le bot répond avec une blague aléatoire.")
             .addField("/mute", "Permet de mute un utilisateur (/mute @Poul0s#8358 10m) /x PS: Faite gaf que le grade Muted n'ai pas les permissions de parle et d'envoyer des message.")
             .addField("/énigme", "Le bot répond avec une énigme aléatoire")
+            .addField("/giveaway", "Permet d'organiser des giveaway, exemple /giveaway 5 1 10€ paysafecard")
+            .addField("/Maj", "Permet de voir la maj la plus récente")
+            .addField("/AllMaj", "Permet de voir la liste des mise a jour jusqu'a 10 maj")
             /*
-            .addField("")
-            .addField("")
-            .addField("")
             .addField("")
             .addField("")
             .addField("")
@@ -366,54 +368,98 @@ bot.on('message', message => {
             .setColor("#FE0000")
             .setFooter("NejiBot")
             .setTimestamp()
-    message.channel.send(embed);
-//fin help
-
+    message.channel.send("aide envoyé en privé");
+        userre.createDM().then(function (channelhelp) {
+         channelhelp.send(embed);
+    })
+}
+if(message.content.startsWith(prefix +  "warn")){
+    if(!auth) return message.channel.send("tu n'as pas mentionné d'utilisateur")
+    var warnuser = message.mentions.users.first();
+    let paramswarn = message.content.split(" " + warnuser + " ").slice(1);
+    let raisonwarn = paramswarn
+    if(!message.guild.channels.find(`name`, "warn")) return message.reply("le channel #warn est inexistant")
+    var embedwarnDM = new Discord.RichEmbed()
+    .setAuthor(auth.username, auth.displayAvatarURL)
+    .setTitle("WARN")
+    .addField("raison", `Tu as été warn du serveur ${message.guild.name} à ${message.createdTimestamp} pour ${raisonwarn} `)
+    .setFooter("NejiBot")
+    .setTimestamp()
+    warnuser.createDM().then(function (channelwarnDM) {
+        channelwarnDM.send(embedwarnDM)
+    })
+    var embedwarnPUBLIC = new Discord.RichEmbed()
+    .setAuthor(auth.username, auth.displayAvatarURL)
+    .setTitle("WARN")
+    .addField("Personne warn :", `${warnuser.username}`)
+    .addField("raison du warn :", `${raisonwarn}`)
+    .addField("warn à:", `${message.createdTimestamp}`)
+    message.guild.channels.find(`name`, "warn").send(embedwarnPUBLIC);
+    return;
+    }
+   if(message.content.startsWith(prefix +  "addrole")){
+       if(!message.member.hasPermission("MANAGE_ROLES")){
+           return message.reply("tu n'as pas les permission **MANAGE_ROLES**")
+       }
+       if(!message.guild.member(bot.user).hasPermission("MANAGE_ROLES")){
+           return message.reply("Je n'ai pas les permission **MANAGE_ROLES**")
+       }
+let addroleUser = message.guild.member(message.mentions.users.first());
+    if(!addroleUser) {
+        return message.reply ("Je n'arrive pas à trouvé cet utilisateur, tu t'es peut être trompé")
+    }
+    let paramsrole = message.content.split(" " + addroleUser + " ").slice(1);
+        let addrole = paramsrole
+        if(!addrole){
+            return message.reply("tu n'as pas mis le grade a ajouté");
+        }
+        let addrole2 = message.guild.roles.find("name", `${addrole}`);
+        if(!addrole2){
+            return message.reply("je n'arrive pas à trouver ce role")
+        }
+        if(!addrole2 < message.author.roles){
+            return message.reply("le roles que tu veux ajouté est plus grand que le tiens... je sait se que tu voulait faire...")
+        }
+        addroleUser.addRole(addrole2)
+    }
     if(message.content === "#GABARD"){
         message.channel.send("Muena muena muene kisuéyawésa")
     }
-
     /*
     if(message.content === `${bot.Client.tag}`){
         message.channel.send("Oui, c'est moi")
     }
     pb*/
-
-
 //début join
-    if(command === 'join') {
+    if(message.content.startsWith(prefix +  'join')) {
         message.channel.send(`Si tu veux venir sur mon discord join sur https://discord.gg/yJBdh6z`);
     }
 //fin join
-
+ 
 //début invite
-    if (command === 'invite') {
+    if (message.content.startsWith(prefix +  'invite')) {
         message.reply(`Pour pouvoir m'invité sur ton serveur discord, va sur ce lien http://bit.ly/NejiBot , après tu peux aussi inviter mon double qui va supprimé tout les mauvais message, pour l'inviter va sur ce lien : http://bit.ly/NejiPlus .`);
     }
 //fin invite
-
+ 
 //début ping
-    if(command === 'ping'){
+    if(message.content.startsWith(prefix +  'ping')){
         message.channel.send('Le temps de latence sur le serveur = `' + `${message.createdTimestamp - Date.now()}` + ' ms`');
     }
 //fin ping
-
+ 
 //début liste des serveur
-    if (command === 'serverlist'){
+    if (message.content.startsWith(prefix +  'serverlist')){
         message.channel.send(bot.guilds.map(r => r.name + ` | **${r.memberCount}** membres`));
     }
 //fin liste des serveur
-
-
-
-
 //début 8ball
-    if (command === "8ball"){
+    if (message.content.startsWith(prefix +  "8ball")){
         let args = message.content.split(" ").slice(1);
         let tte = args.join(" ")
         if (!tte){
             return message.reply("Tu n'as pas poser de question")};
-
+ 
         var replys = [
             "Oui",
             "non",
@@ -425,7 +471,7 @@ bot.on('message', message => {
             "enchallah comme on dirait en bretagne (désolé la bretagne)",
             "ok mais tu me doit 50€"
         ]
-
+ 
         let reponse = (replys[Math.floor(Math.random() * replys.length)])
         var bembed = new Discord.RichEmbed()
             .setDescription(":8ball: 8ball :8ball:")
@@ -434,44 +480,42 @@ bot.on('message', message => {
         message.channel.send(bembed);
     }
     //fin 8ball
-
     if (message.content === "/solution 1"){
         message.channel.send(`${message.author.username} : Hier, on était le 31 décembre, elle a eu 18 ans. Cette année, elle va avoir 19 ans et l'année prochaine, 20 ans.`);
     }
-
+ 
     if (message.content === "/solution 2"){
         message.channel.send(`${message.author.username} : 3 car il reste l'odorat, le toucher et le goût. Muet ne correspond pas à la privation d'un sens.`)
     }
-
+ 
     if (message.content === "/solution 3"){
         message.channel.send(`${message.author.username} : le someil`)
     }
-
+ 
     if (message.content === "/solution 4"){
         message.channel.send(`${message.author.username} : La vie ! Plus on avance dans le temps, plus on s'approche de la mort`)
     }
-
+ 
     if (message.content === "/solution 5"){
         message.channel.send(`${message.author.username} : L'équilibre, car lorsqu'on perd l'équilibre on tombe.`)
     }
-
+ 
     if (message.content === "/solution 6"){
         message.channel.send(`${message.author.username} : essaye de traduire cette ligne de code de hexadecimal à texte normal`)
     }
-
+ 
     if (message.content === "/solution 7"){
         message.channel.send(`${message.author.username} : essaye de traduire ce texte de binaire en texte puis ce texte à texte normal`)
     }
-
+ 
     if (message.content === "/solution 8"){
         message.channel.send(`${message.author.username} : essaye de traduire ce texte de hexadecimal en texte puis ce texte en binaire à texte`)
     }
-
+ 
     if (message.content === "/solution 9"){
         message.channel.send(`${message.author.username} : essaye de traduire ce texte de binaire en texte normal`)
     }
-
-    if(command === "énigme"){
+if(message.content.startsWith(prefix +  "énigme")){
         var enigme = [
             "01000010 01110010 01100001 01110110 01101111 00101100 00100000 01110100 01110101 00100000 01100001 01110011 00100000 01100011 01101111 01101101 01110000 01110010 01101001 01110011 00100000 01110001 01110101 01100101 00100000 01100011 01011100 00100111 11101001 01110100 01100001 01101001 01110100 00100000 01100100 01110101 00100000 01100010 01101001 01101110 01100001 01101001 01110010 01100101 (solution : /solution 9)",
             "Avant-hier, Julie avait 17 ans mais l'année prochaine, elle aura 20 ans. Comment est-ce possible ? (pour la solution ecrit /solution 1)",
@@ -484,19 +528,17 @@ bot.on('message', message => {
             "30 31 31 31 30 30 31 31 20 30 31 31 30 31 30 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 31 30 31 30 30 20 30 31 31 31 30 31 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 31 30 31 30 30 20 30 31 31 31 30 30 31 30 20 30 31 31 30 31 31 31 31 20 30 31 31 31 30 31 30 31 20 30 31 31 31 30 31 31 30 20 30 31 31 30 30 31 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 31 30 30 31 31 20 30 31 31 30 30 30 30 31 20 30 31 31 30 31 31 31 30 20 30 31 31 31 30 30 31 31 20 30 30 31 30 30 30 30 30 20 30 31 31 31 30 30 31 31 20 30 31 31 30 31 31 31 31 20 30 31 31 30 31 31 30 30 20 30 31 31 31 30 31 30 31 20 30 31 31 31 30 31 30 30 20 30 31 31 30 31 30 30 31 20 30 31 31 30 31 31 31 31 20 30 31 31 30 31 31 31 30 20 30 30 31 30 30 30 30 30 20 30 31 31 31 30 31 30 30 20 30 31 31 30 30 30 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 30 30 31 31 31 20 30 31 31 30 30 30 30 31 20 30 31 31 30 30 31 31 31 20 30 31 31 30 31 31 31 30 20 31 31 30 30 30 30 31 31 20 31 30 31 30 31 30 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 30 31 31 30 30 20 30 31 31 30 30 31 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 31 30 30 30 30 20 30 31 31 30 30 30 31 31 20 30 30 31 30 30 30 30 30 20 30 31 31 30 30 31 30 30 20 30 31 31 30 30 31 30 31 20 30 30 31 30 30 30 30 30 20 30 31 31 30 31 30 31 31 20 30 31 31 30 31 30 30 31 20 30 31 31 30 31 31 31 30 20 30 31 31 31 30 30 31 31 20 30 31 31 31 30 31 30 30 20 30 31 31 30 30 30 30 31 20 30 31 31 30 30 30 30 31 20 30 31 31 31 30 30 31 30 (solution : /solution 8)"
         ]
         let enigme2 = (enigme[Math.floor(Math.random() * enigme.length)])
-        let usere = message.author
+        let auth = message.author
         let embede = new Discord.RichEmbed()
         .setTitle("énigme")
-            .setAuthor(usere.username, usere.displayAvatarURL)
+            .setAuthor(auth.username, auth.displayAvatarURL)
             .addField("L'énigme est:", enigme2)
             .setColor("#FE0000")
             .setFooter("NejiBot")
             .setTimestamp()
         message.channel.send(embede)
     }
-
-    if(command === "blague"){
-
+    if(message.content.startsWith(prefix +  "blague")){
         var blague = [
             "Quelle mamie fait peur au voleur ? Mamie Traillette",
             "J'ai fait une blague sur les magazin, mais elle a pas supermarché",
@@ -572,57 +614,21 @@ bot.on('message', message => {
             .setTimestamp()
         message.channel.send(embedb)
     }
-
 //début info
-if (command === "info")
-    var embed = new Discord.RichEmbed()
+if (message.content.startsWith(prefix +  "info")){
+    var embedi = new Discord.RichEmbed()
         .setDescription("information du discord")
         .addField("Nom du discord", message.guild.name)
         .addField("Le discord a été créée le", message.guild.createdAt)
         .addField("Tu as rejoins le discord le", message.member.joinedAt)
         .addField("j'ai rejoins le discord le", message.client.JoinedAt)
         .addField("Membres total sur le discord", message.guild.memberCount)
+        .setColor("#FE0000")
         .setFooter("NejiBot")
         .setTimestamp()
-    message.channel.send(embed);
-//fin info
-
-/*
-if (message === `${message.bot.guild.tag}`) {
-    message.reply("oui, c'est moi")
+    message.channel.send(embedi);
 }
-*/
-
-    /*
-    //déut creation neji-annonce
-    bot.on('ready', function () {
-        let nej1 = bot.guild.channel.find('name', 'annonce-neji')
-        //début de la création
-        if(!nej1){
-            try{
-                nej1 = bot.guild.createChannel({
-                    name: "annonce-neji"
-                })
-            }catch(e){
-                console.log(e.stack);
-            }
-        }
-        //fin de la création
-    })
-    */
-//fin creation neji annonce
-
-    /*
-    bot.on("message", message => {
-      let nej1 = message.guild.channels.find('name', 'annonce-neji')
-      if(!nej1){
-        message.guild.createChannel({
-            name: "annonce-neji"
-        })
-    }
-    })
-    */
-
+//fin info
     bot.on('message', message => {
         if(message.content.startsWith(prefix + 'AnnonceNeji')) {
             let args8 = message.content.split(" ").slice(1);
@@ -632,7 +638,7 @@ if (message === `${message.bot.guild.tag}`) {
                 return message.reply(`Il n'y as pas de salon **annonce-neji** sur les serveur ${bot.channels.findAll("name", "annonce-neji").map()}`)
             }
             if(!args8) return message.reply("Tu dois entrer un message")
-
+ 
             if (message.author.id === "300546341518573569") {
                 var embedannonce = new Discord.RichEmbed()
                     .setTitle("Annonce")
@@ -640,28 +646,17 @@ if (message === `${message.bot.guild.tag}`) {
                     .addField("message", args8)
                     .setTimestamp()
                 return bot.channels.findAll("name", "annonce-neji").map(channel => channel.send(embedannonce));
-
+ 
             }else{
                 message.channel.send("Tu n'as pas les permissions d'envoyer une annonce")
             }
         }
     })
-
-
-
-
-
-if (command === "inc") {
+if (message.content.startsWith(prefix +  "inc")){
     message.reply("Le message global est un message qui à été envoyé depuis un autre serveur, pour parler toi aussi au autre serveur, il faut utilisé la commande /NejiChat 'message'")
 }
-
-
-
-//pk ya ca ??? : })
-//fin creation neji annonce
-
 //début chat global
-    if (command === 'NejiChat') {
+    if (message.content.startsWith(prefix +  'NejiChat')) {
         let args = message.content.split(" ").slice(1);
         let xo03 = args.join(" ")
         var xo02 = message.guild.channels.find('name', 'neji-chat');
@@ -680,15 +675,12 @@ if (command === "inc") {
         bot.channels.findAll('name', 'neji-chat').map(channel => channel.send(embedglobal));
     }
 //fin chat global
-
 //début créateur
-
 //bot.on('message', function (message) {
 //    if (message.content === prefix + "createur")
 //        message.channel.send("Mon créateur est Poul0s#8358, les personnes qui ont aider le développeur pour me développé sont: Moitié prix#4263 et LePtitMetalleux#7215, dédicasse aussi à Pyrius#9402 et KeNoDa#4258")
 //})
-
-    if (command === "créateur")
+    if (message.content.startsWith(prefix +  "créateur")){
         var embedcréateur = new Discord.RichEmbed()
             .setTitle("Mon créateur + dédicasse")
             .setDescription("Sur ce message, vous allez voir qui m'a crée, qui m'a aidé pour le développement et des dédicasse.")
@@ -699,32 +691,26 @@ if (command === "inc") {
             .setFooter("NejiBot")
             .setTimestamp()
     message.channel.send(embedcréateur);
+    }
 //fin créateur
-
 //début trakafoins
     if(message.content === "trakafoins")
         message.channel.send("TRAAAKAAAFOOIIINNNNS");
 //fin trakafoins
-
 //début token
-    if (command === "token")
+    if (message.content.startsWith(prefix +  "token")){
         message.channel.send(`${message.author.username} mon token est T UN MALADE JAMAIS JLE DIRAIT`);
+    }
 //fin token
-
-//début test
-
-
-//fin test
-
 //début chifoumi
     if(message.content.startsWith(prefix + "chifoumi pierre")){
-
+ 
         var replysp = [
             "feuille, perdu, la prochaine fois peut être.",
             "pierre, égalité",
             "ciseaux, bravo, tu as gagné !"
         ]
-
+ 
         let reponsep = (replysp[Math.floor(Math.random() * replysp.length)])
         var embedpierre = new Discord.RichEmbed()
             .setTitle("chifoumi")
@@ -736,13 +722,13 @@ if (command === "inc") {
         message.channel.send(embedpierre);
     }
     if (message.content.startsWith(prefix + "chifoumi feuille")){
-
+ 
         var replysf = [
             "feuille, égalité",
             "pierre, bravo tu as gagné",
             "ciseaux, perdu, tu peux gagnera la prochaine fois peut être"
         ]
-
+ 
         let reponsef = (replysf[Math.floor(Math.random() * replysf.length)])
         var embedfeuille = new Discord.RichEmbed()
             .setTitle("chifoumi")
@@ -758,14 +744,14 @@ if (command === "inc") {
         let ttepierre = argspierre.join(" ")
         if (!ttepierre){
             return message.reply("Tu n'as pas choisix ton action")};
-
+ 
         var replysc = [
             "feuille",
             "pierre",
             "ciseaux"
         ]
-
-        let reponsec = (replysc[Math.floor(Math.random() * replysc.length)])
+ 
+        let reponsec = (replysc[Math.floor(Math.random() * replysc.length)]) // la c les commande de chifoumie
         var embedciseaux = new Discord.RichEmbed()
             .setTitle("chifoumi")
             .addField(`${message.author.username} :`, "ciseaux")
@@ -782,12 +768,10 @@ if (command === "inc") {
             return message.reply(`Tu dois choisir entre "/chifoumi pierre", "/chifoumi feuille" ou "/chifoumi ciseaux"`)};
     }
     //fin chifoumi
-
-
     /*
     //début annonce all serv
     if(message.author.id === "300546341518573569") {
-        if(command === 'AnnonceNeji') {
+        if(message.content.startsWith(prefix +  'AnnonceNeji') {
             let argsp = message.content.split(" ").slice(1);
             let ne03 = argsp.join(" ")
             var ne02 = message.guild.channels.find('name', 'annonce-neji');
@@ -806,29 +790,17 @@ if (command === "inc") {
     }
 });
 */
-
-
-
-
-
-
-
 })
-
 //début nouveau membre
 bot.on('guildMemberAdd', function (member) {
     member.createDM().then(function (channel) {
         return channel.send("Bienvenue sur le serveur, n'hesite pas à utilisé la commande /help pour savoir les commande que je fais.")
     }).catch(console.error)
 });
-
-
-
-
 bot.on("guildMemberAdd", member => {
     let joinchannel = member.guild.channels.find(`name`, "hi-bye")
     if(!joinchannel) {
-        member.guild.createChannel("hi-bye")
+       return member.guild.createChannel("hi-bye")
         /*
         let joinchannel2 = member.guild.channels.find(`name`, "hi-bye")
         timeout: 1000
@@ -842,8 +814,6 @@ bot.on("guildMemberAdd", member => {
     .setTimestamp()
     joinchannel2.send(joinembed2);
     */
-
-        return;
     }
     const joinembed = new Discord.RichEmbed()
         .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
@@ -853,16 +823,13 @@ bot.on("guildMemberAdd", member => {
         .addField(`Bienvenue à ${member.user.tag} sur le serveur ${member.guild.name}`, "N'hésite pas à utilisé la commande /help")
         .setFooter("NejiBot")
         .setTimestamp()
-    joinchannel.send(joinembed);
-
-    return;
+    return joinchannel.send(joinembed);
 })
 //fin nouveau membre
-
 bot.on("guildMemberRemove", member => {
     let leavechannel = member.guild.channels.find(`name`, "hi-bye")
     if(!leavechannel) {
-        member.guild.createChannel("hi-bye")
+        return member.guild.createChannel("hi-bye")
         /*
         let joinchannel2 = member.guild.channels.find(`name`, "hi-bye")
         timeout: 1000
@@ -876,8 +843,6 @@ bot.on("guildMemberRemove", member => {
     .setTimestamp()
     joinchannel2.send(joinembed2);
     */
-
-        return;
     }
     const leaveembed = new Discord.RichEmbed()
         .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
@@ -887,10 +852,64 @@ bot.on("guildMemberRemove", member => {
         .addField(`aurevoir et à bientôt ${member.user.tag} sur le serveur ${member.guild.name}`, "nous attendions ton retour avec impatience (ou pas)")
         .setFooter("NejiBot")
         .setTimestamp()
-    leavechannel.send(leaveembed);
-
-    return;
+    return leavechannel.send(leaveembed);
 })
+bot.on("message", async message => {
+if(message.content.startsWith(prefix + "giveaway")) {
+    let givRole = message.guild.roles.find("name", "PermGive");
+        if(!givRole) return message.reply("Il n'y as pas de grade **PermGive** sur le serveur, veuillez un créer un s'il vous plaît")
+        if(!message.member.roles.has(givRole.id)) {
+            return message.reply("tu n'as pas la permission de faire un giveaway.").catch(console.error);
+        }
+    var messageArray = message.content.split(" ");
+    var time;
+    var gagnant;
+        gagnant = Number(messageArray[2]);
+        if(!gagnant) return message.reply("tu n'as pas mis le nombre de gagnant")
+        time = Number(messageArray[1]);
+        if(!time) return message.reply("tu n'as pas mis de temps")
+        let pari = message.content.split(" " + time + " " + gagnant + " ").slice(1);
+            let item = pari
+            if(!item) return message.reply("tu n'as pas mis de chose à faire gagné")
+            let member = message.author
+            var embedgiveaway = new Discord.RichEmbed()
+            .setAuthor(member.username, member.displayAvatarURL)
+            .setTitle("Giveaway")
+            .addField("Chose a gagné :", `${item}`)
+            .addField("Nombre de gagnant :", `${gagnant}`)
+            .addField("Temps :", `${time} minute`)
+            //.addField("Se termine à :", `${message.createdAt + time * 60000}`)
+            .setFooter(`Giveaway`)
+            //message.channel.send(embedgiveaway);
+            var embedgiveawaySent = await message.channel.send(embedgiveaway);
+            embedgiveawaySent.react("🎉");
+            setTimeout(function() {
+             var peopleReacted = embedgiveawaySent.reactions.get("🎉").users.array();
+             var inodex = Math.floor(Math.random() * peopleReacted.length);
+             var ggg = [];
+             var gggmessage = "";  
+             for (var i = 0; i < gagnant; i++){
+            ggg.push(peopleReacted[inodex]);
+            inodex = Math.floor(Math.random() * peopleReacted.length);
+             }
+             for (var i = 0; i < ggg.length; i++){
+                 if (ggg[i].id === bot.user.id){
+                 ggg.slice(i, 1);
+                     continue;
+                 }
+               gggmessage += (ggg[i].toString() + " ");
+             }
+             var haveHas = "a";
+             if (ggg.length == 1){
+                 haveHas = "a gagné";
+             }else{
+                 haveHas = "ont gagné";
+             }
+             let gigg = ggg
+             message.channel.send(gigg + " " + haveHas + " " + `${item}`);
+            }, time * 60000);
+        }
+    })
 
 
 bot.login(process.env.TOKEN)
