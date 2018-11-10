@@ -202,6 +202,15 @@ if(args1 === "duel"){
        return mp.send(embed);
        })  
 }
+    if(args1 === "youtube"){
+    embed.setTitle("/youtube")
+    .setDescription("Permet de faire joué une vidéo youtube dans le salon ou tu est")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
 }
 module.exports.help = {
     name: "aide"
