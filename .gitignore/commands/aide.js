@@ -202,8 +202,8 @@ if(args1 === "duel"){
        return mp.send(embed);
        })  
 }
-    if(args1 === "youtube"){
-    embed.setTitle("/youtube")
+if(args1 === "yt"){
+    embed.setTitle("/yt")
     .setDescription("Permet de faire joué une vidéo youtube dans le salon ou tu est")
     .setFooter("NejiBot")
     .setTimestamp()
