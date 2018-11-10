@@ -35,6 +35,7 @@ let userre = message.author
         .setColor("FE0000")
         .addField("Modération", "/ban \n/kick \n/mute \n/clear \n/report", true)
         .addField("Utilitaire", "/invite \n/join \n/serverlist \n/ping \n/info \n/NejiChat \n/giveaway \n/listEmoji \n/sondage", true)
+        .addField("Musique", "/youtube", true)
         .addField("fun", "/8ball \n/chifoumi \n/blague \n/énigme \n/duel", true)
         .addField("Autre", "/créateur \n/Maj \n/AllMaj", true)
         .setFooter("NejiBot")
