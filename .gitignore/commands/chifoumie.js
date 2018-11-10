@@ -3,7 +3,7 @@ module.exports.run = async (bot, message, args) => {
 let choix = message.content.split(" ").slice(1)
 let choixbis = choix[1]
 if(!choix) return message.reply("Tu dois choisir entre pierre, feuille et ciseaux")
-if(choixbis === "pierre" || "Pierre" || "pierres" || "Pierres"){
+if(choixbis === "pierre"){
     var replysp = [
         "feuille",
         "pierre",
@@ -23,7 +23,7 @@ if(replysp === "ciseaux") var gagnant = message.author.username
         .setColor("FE0000")
     message.channel.send(embedpierre);
 }
-if(choixbis === "feuille" || "Feuille" || "feuilles" || "Feuilles"){
+if(choixbis === "feuille"){
     var replysp = [
         "feuille",
         "pierre",
@@ -43,7 +43,7 @@ if(replysp === "pierre") var gagnant = message.author.username
         .setColor("FE0000")
     message.channel.send(embedpierre);
 }
-if(choixbis === "ciseaux" || "Ciseaux" || "ciseau" || "Ciseau"){
+if(choixbis === "ciseaux"){
     var replysp = [
         "feuille",
         "pierre",
@@ -63,7 +63,7 @@ if(replysp === "feuille") var gagnant = message.author.username
         .setColor("FE0000")
     message.channel.send(embedpierre);
 }
-if(!choisbis === "ciseaux" || "Ciseaux" || "ciseau" || "Ciseau" || "feuille" || "Feuille" || "feuilles" || "Feuilles" || "pierre" || "Pierre" || "pierres" || "Pierres") return message.reply("Tu n'as pas choisix un bon mot, tu doit choisir entre pierre feuille ou ciseaux.")
+if(!choisbis === "ciseaux" || "feuille" || "pierre") return message.reply("Tu n'as pas choisix un bon mot, tu doit choisir entre pierre feuille ou ciseaux.")
 }
 module.exports.help = {
     name: "chifoumi"

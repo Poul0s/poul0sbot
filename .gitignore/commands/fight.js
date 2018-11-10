@@ -36,10 +36,10 @@ message.channel.send(embedfight)
 .setTimestamp()
 message.channel.send(embedfight)
         }
-    }/*
+    }
     if(message.mentions.users.size === 2) {
         let fightMember1 = message.guild.member(message.mentions.users.first());
-        let fightMember2 = message.guild.member(message.mentions.users.second());
+        let fightMember2 = message.guild.member(message.mentions.users.last());
 var fight = [
     `${auth}`,
     `${fightMember1}`
@@ -82,7 +82,7 @@ if(fightresult === `${fightMember2}`){
 .setTimestamp()
 message.channel.send(embedfight)
 }
-    }*/
+    }
     return;
 }
 module.exports.help = {
