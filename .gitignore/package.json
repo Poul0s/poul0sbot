@@ -12,9 +12,11 @@
     "discord.js": "^11.4.2",
     "ffmpeg": "0.0.4",
     "ffmpeg-binaries": "^4.0.0",
+    "ms": "^2.1.1",
+    "opusscript": "0.0.6",
+    "os": "^0.1.1",
     "fs": "0.0.1-security",
     "lowdb": "^1.0.0",
-    "ms": "^2.1.1",
     "ytdl-core": "^0.25.0"
   }
 }
