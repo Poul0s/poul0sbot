@@ -6,10 +6,10 @@ module.exports.run = async (bot, message, args) => {
         return message.reply("Tu n'as pas la permissions de clear.")
     }
     var args2 = message.content.split(" ").slice(1);
-    var messagecount = parseInt(args2.join(" "))
-    message.channel.fetchMessages({
-        limit: messagecount
-    }).then(messages => message.channel.bulkDelete(messagecount));
+    //var messagecount = parseInt(args2.join(" "))
+    var messagecount = args2
+    //message.channel.fetchMessages({limit: messagecount}).then(messages => 
+message.channel.bulkDelete(messagecount));
     message.delete()
 }
 module.exports.help = {
