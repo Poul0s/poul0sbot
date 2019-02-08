@@ -149,20 +149,6 @@ bot.on("guildMemberRemove", member => {
     let leavechannel = member.guild.channels.find(`name`, "hi-bye")
     if(!leavechannel) {
         return member.guild.createChannel("hi-bye")
-        /*
-        let joinchannel2 = member.guild.channels.find(`name`, "hi-bye")
-        timeout: 1000
-        const joinembed2 = new Discord.RichEmbed()
-    .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
-    .setImage(`${member.user.displayAvatarURL}`)
-    .setTitle("Nouveau membre")
-    .setColor("#FE0000")
-    .addField(`Bienvenue à ${member.user.tag} sur le serveur ${member.guild.name}`)
-    .setFooter("NejiBot")
-    .setTimestamp()
-    joinchannel2.send(joinembed2);
-    */
-    }
     const leaveembed = new Discord.RichEmbed()
         .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
         .setImage(`${member.user.displayAvatarURL}`)
