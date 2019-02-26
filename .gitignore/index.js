@@ -147,8 +147,7 @@ bot.on("guildMemberAdd", member => {
 //fin nouveau membre
 bot.on("guildMemberRemove", member => {
     let leavechannel = member.guild.channels.find(`name`, "hi-bye")
-    if(!leavechannel) {
-        return member.guild.createChannel("hi-bye")
+    if(!leavechannel) member.guild.createChannel("hi-bye")
     const leaveembed = new Discord.RichEmbed()
         .setAuthor(`${member.user.username}`, member.user.displayAvatarURL)
         .setImage(`${member.user.displayAvatarURL}`)
