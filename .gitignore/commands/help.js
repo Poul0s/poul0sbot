@@ -2,36 +2,8 @@ const Discord = require('discord.js')
 module.exports.run = async (bot, message, args) => {
 let userre = message.author
         let embed = new Discord.RichEmbed()
-            /*.setTitle("Liste des commande")
-            .addField("/ban", "Permet de bannir un utilisateur.", true)
-            .addField("/kick", "Permet de kick un membre du serveur.", true)
-            .addField("/invite", "Permet de m'ajouter sur ton serveur discord.", true)
-            .addField("/join", "Permet de rejoindre mon serveur discord.", true)
-            .addField("/serverlist", "permet de voir la liste des serveur ou je suis.", true)
-            .addField("(bug) /ping", "Permet de voir la latence entre moi et le serveur.", true)
-            .addField("/8ball", "On pose une question et le bot répond aléatoirement.", true)
-            .addField("/info", "Permet de voir les info du serveur.",true)
-            .addField("/NejiChat **VotreMessage**", "Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat", true)
-            .addField("/créateur", "Permet de savoir qui m'a crée", true)*
-            .addField("/clear", "Permet d'effacer de 2 à 100 message.", true)
-            .addField("/chifoumi", "Permet de faire un pierre feuille ciseaux avec le bot", true)
-            .addField("/report", "Permet de report un joueur pour une telle raison.", true)
-            .addField("/blague", "Le bot répond avec une blague aléatoire.", true)
-            .addField("/mute", "Permet de mute un utilisateur (/mute @Poul0s#8358 10m) /x PS: Faite gaf que le grade Muted n'ai pas les permissions de parle et d'envoyer des message.", true)
-            .addField("/énigme", "Le bot répond avec une énigme aléatoire",true)
-            .addField("/giveaway", "Permet d'organiser des giveaway, exemple /giveaway 5 1 10€ paysafecard", true)
-            .addField("/Maj", "Permet de voir la maj la plus récente", true)
-            .addField("/AllMaj", "Permet de voir la liste des mise a jour jusqu'a 10 maj", true)
-            .addField("/listEmoji", "permet d'avoir la list des emoji sur le serveur", true)
-            .addField("/sondage", "Permet de créer des sondage", true)
-            .addField("/duel", "permet de faire un duel et de voir qui est le meilleur !", true)
-            .addField("PS", "Vu que le bot n'est pas terminé, la commande n'est pas terminé non plus.")
-            .setColor("#FE0000")
-            .setFooter("NejiBot")
-            .setTimestamp()
-            */
         .setTitle("Liste des commande")
-        .setDescription("Pour voir la description d'une commande, utilise la commande /aide <VotreCommande>")
+        .setDescription("Pour voir la description d'une commande, utilise la commande /help <VotreCommande> exemple /help ban")
         .setColor("FE0000")
         .addField("Modération", "/ban \n/kick \n/mute \n/clear \n/report", true)
         .addField("Utilitaire", "/invite \n/join \n/serverlist \n/ping \n/info \n/NejiChat \n/giveaway \n/listEmoji \n/sondage", true)
@@ -44,6 +16,217 @@ let userre = message.author
         userre.createDM().then(function (channelhelp) {
          channelhelp.send(embed);
         })  
+        if(!args1) {message.channel.send("aide envoyé en privé");
+        userre.createDM().then(function (channelhelp) {
+         channelhelp.send(embed);
+        }) }
+if(args1 === "ban"){
+    embed.setTitle("/ban")
+    .setDescription("Permet de bannir un utilisateur.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (ban) {
+        return ban.send(embed);
+       })  
+}
+if(args1 === "kick"){
+    embed.setTitle("/kick")
+    .setDescription("Permet de kick un membre du serveur.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (kick) {
+       return kick.send(embed);
+       })  
+}
+if(args1 === "invite"){
+    embed.setTitle("/invite")
+    .setDescription("Permet de m'ajouter sur ton serveur discord.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "join"){
+    embed.setTitle("/join")
+    .setDescription("Permet de rejoindre mon serveur discord.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "serverlist"){
+    embed.setTitle("/serverlist")
+    .setDescription("permet de voir la liste des serveur ou je suis.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "ping"){
+    embed.setTitle("/ping")
+    .setDescription("Permet de voir la latence entre moi et le serveur.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "8ball"){
+    embed.setTitle("/8ball")
+    .setDescription("On pose une question et le bot répond aléatoirement.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "info"){
+    embed.setTitle("/info")
+    .setDescription("Permet de voir les info du serveur.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "NejiChat"){
+    embed.setTitle("/NejiChat")
+    .setDescription("Le /NejiChat est une commande qui permet de parler avec tout les autre serveur qui m'ont, mais cela require le salon textuel #neji-chat")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "créateur"){
+    embed.setTitle("/créateur")
+    .setDescription("Permet de savoir qui m'ont crééent")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "clear"){
+    embed.setTitle("/clear (non fonctionnel)")
+    .setDescription("Permet d'effacer de 2 à 100 message.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "chifoumi"){
+    embed.setTitle("/chifoumi")
+    .setDescription("Permet de faire un pierre feuille ciseaux avec le bot")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "report"){
+    embed.setTitle("/report")
+    .setDescription("Permet de report un joueur pour une telle raison.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "blague"){
+    embed.setTitle("/blague")
+    .setDescription("Le bot répond avec une blague aléatoire.")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "mute"){
+    embed.setTitle("/mute")
+    .setDescription("Permet de mute un utilisateur (/mute @Poul0s#8358 10m) \n ``PS: Faite gaf que le grade Muted n'ai pas les permissions de parle et d'envoyer des message.``")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "énigme"){
+    embed.setTitle("/énigme")
+    .setDescription("Le bot répond avec une énigme aléatoire")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "giveaway"){
+    embed.setTitle("/giveaway")
+    .setDescription("Permet d'organiser des giveaway, exemple /giveaway 5 1 10€ paysafecard")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "Maj"){
+    embed.setTitle("/Maj")
+    .setDescription("Permet de voir la maj la plus récente")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "AllMaj"){
+    embed.setTitle("/AllMaj")
+    .setDescription("Permet de voir la liste des mise a jour jusqu'a 10 maj")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "listEmoji"){
+    embed.setTitle("/listEmoji")
+    .setDescription("permet d'avoir la list des emoji sur le serveur")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "sondage"){
+    embed.setTitle("/sondage")
+    .setDescription("Permet de créer des sondage")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "duel"){
+    embed.setTitle("/duel")
+    .setDescription("permet de faire un duel et de voir qui est le meilleur !")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
+if(args1 === "yt"){
+    embed.setTitle("/yt")
+    .setDescription("Permet de faire joué une vidéo youtube dans le salon ou tu est")
+    .setFooter("NejiBot")
+    .setTimestamp()
+    auth.createDM().then(function (mp) {
+       return mp.send(embed);
+       })  
+}
 }
 module.exports.help = {
         name: "help"
