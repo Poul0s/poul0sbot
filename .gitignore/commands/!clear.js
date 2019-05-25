@@ -1,14 +1,11 @@
 const Discord = require('discord.js')
 module.exports.run = async (bot, message, args) => {
-    let modRole = message.guild.roles.find("name", "PermMute");
-    if(!modRole) return message.reply("Il n'y as pas de grade **PermMute** sur le serveur, veuillez un créer un s'il vous plaît")
-    if(!message.member.roles.has(modRole.id)) return message.reply("Tu n'as pas la permissions de clear.")
-    var args2 = message.content.split(" ").slice(1);
-    //var messagecount = parseInt(args2.join(" "))
-    var messagecount = args2
-    //message.channel.fetchMessages({limit: messagecount}).then(messages => 
-message.channel.bulkDelete(messagecount);
-    message.delete()
+    if(message.member.hasPermission("MANAGE_MESSAGES")){
+        message.channel.fetchMessages()
+            let list = message.content.split(" ").slice(1)
+  if(list) {   message.channel.bulkDelete(list[0]).catch(console.error)
+      message.delete() }else message.reply("merci de bien vouloir indiqué le nombre de message a supprimé")
+    }else message.reply("désolé mais tu n'a pas accès a cette commande")
 }
 module.exports.help = {
     name: "clear"
