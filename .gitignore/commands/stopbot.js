@@ -1,6 +1,5 @@
 const Discord = require('discord.js')
 module.exports.run = async (bot, message, args) => {
-    var auth = message.author.id
     if(message.author.id === "519186194886688779") {
       bot.users.get("519186194886688779").send("Je m'eteint");
           message.channel.send("Ârret en cours").then(() => {

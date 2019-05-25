@@ -47,7 +47,7 @@ function changing_status() {
  }
  
  bot.on("ready", () => {
-    console.log(`${bot.user.username} est en ligne sur ${bot.guilds.size} serveurs avec : ${bot.users.size} urilisateur`);
+    console.log(`${bot.user.username} est en ligne sur ${bot.guilds.size} serveurs avec : ${bot.users.size} utilisateur`);
     setInterval(changing_status, 5000);
 })
 //fin option bot
